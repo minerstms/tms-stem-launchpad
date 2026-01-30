@@ -1,0 +1,1129 @@
+<!DOCTYPE html>
+
+<html lang="en" data-project="project-06">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/>
+<title>Coding & Programming — TMS STEM</title>
+<meta content="TMS STEM project page." name="description"/>
+<link href="assets/style.css?v=7" rel="stylesheet"/>
+<link rel="stylesheet" href="assets/project-page.css?v=1">
+<style id="daTopMockupCards">
+
+/* === CENTRAL HEADING SCALE (edit here only) === */
+:root{
+  --H_SECTION: 26px;  /* "Tools", big section headings */
+  --H_CARD:    24px;  /* card headers: Vocabulary, Daily Learning Objective, Project Tools */
+  --H_GIMKIT:  24px;  /* Gimkit! heading */
+}
+  /* Surgical: remove legacy header spacing above DA hero */
+.pageTop {
+  display: none;
+}
+
+
+    .daTop{
+      --navy:#000080;
+      --columbia:#4F86C6;
+      --gold:#f6c343;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.085);
+      --border2: rgba(255,255,255,.16);
+      --shadow2: 0 18px 55px rgba(0,0,0,.45);
+    }
+    
+    .daTop .pageWrap{max-width:1320px;margin:0 auto;padding:18px 18px 90px}
+    .daTop .backLink{display:inline-flex;gap:10px;align-items:center;color:rgba(255,255,255,.85);text-decoration:none;font-weight:800}
+    .daTop .backLink:hover{text-decoration:underline}
+    .daTop .heroGrid{display:grid;grid-template-columns: 1.25fr .75fr;gap:18px;align-items:stretch;margin-top:12px}
+    @media (max-width: 980px){ .daTop .heroGrid{grid-template-columns:1fr;} }
+    .daTop .heroCard{position:relative;border:1px solid var(--border2);background:linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.55));border-radius:22px;box-shadow:var(--shadow2);overflow:hidden}
+    .daTop .heroCard::before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(900px 420px at 15% 0%, rgba(79,134,198,.35), transparent 55%),
+        radial-gradient(700px 520px at 85% 10%, rgba(246,195,67,.16), transparent 55%),
+        linear-gradient(180deg, rgba(0,0,0,.35), rgba(0,0,0,.65));
+      pointer-events:none;
+    }
+    .daTop .heroInner{position:relative;padding:18px}
+    .daTop .titleRow{display:flex;gap:14px;align-items:center}
+    .daTop .projIcon{width:72px;height:72px;border-radius:18px;background:rgba(255,255,255,.10);border:1px solid rgba(255,255,255,.18);display:flex;align-items:center;justify-content:center;overflow:hidden;flex:0 0 auto}
+    .daTop .projIcon img{width:100%;height:100%;object-fit:cover}
+    .daTop .projTitle{font-size:44px;line-height:1.05;margin:0;font-weight:1000;letter-spacing:.2px}
+    .daTop .projMeta{margin-top:6px;color:rgba(255,255,255,.78);font-weight:700}
+    .daTop .metaPill{display:inline-flex;align-items:center;gap:8px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);padding:6px 10px;border-radius:999px;margin-right:8px}
+    .daTop .minerStrip{margin-top:14px;display:flex;flex-wrap:wrap;gap:10px}
+    .daTop .minerPill{display:inline-flex;align-items:center;gap:10px;background:rgba(0,0,128,.22);border:1px solid rgba(79,134,198,.35);padding:8px 10px;border-radius:999px;font-weight:900}
+    .daTop .minerDot{width:10px;height:10px;border-radius:999px;background:var(--gold);box-shadow:0 0 0 4px rgba(246,195,67,.14)}
+    .daTop .overviewCard{margin-top:16px;border-radius:20px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.055);padding:16px}
+    .daTop .overviewTop{display:flex;align-items:flex-end;justify-content:space-between;gap:14px}
+    .daTop .h2{margin:0;font-size:22px;font-weight:1000}
+    .daTop .lead{margin:10px 0 0;color:rgba(255,255,255,.88);font-size:16px;line-height:1.55;font-weight:700}
+    .daTop .thumbRow{display:flex;overflow-x:auto;gap:12px;margin-top:14px;display:flex;gap:12px;overflow:auto;padding:6px 4px 10px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.daTop .thumbRow::-webkit-scrollbar{height:10px}
+.daTop .thumbRow::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:999px}
+
+    .daTop .thumbCard{flex:0 0 260px;position:relative;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);box-shadow:0 10px 28px rgba(0,0,0,.35);cursor:pointer;min-height:120pxflex:0 0 280px;max-width:280px;scroll-snap-align:start;}
+    .daTop .thumbCard:hover{transform:translateY(-1px);border-color:rgba(79,134,198,.55)}
+    .daTop .thumbCard img{width:100%;height:100%;object-fit:cover;display:block;filter:saturate(1.05) contrast(1.05)}
+    .daTop .thumbOverlay{position:absolute;inset:0;background:linear-gradient(180deg, transparent 35%, rgba(0,0,0,.78));display:flex;flex-direction:column;justify-content:flex-end;padding:12px}
+    .daTop .thumbTitle{font-weight:1000}
+    .daTop .thumbMeta{font-size:12px;color:rgba(255,255,255,.80);margin-top:2px;font-weight:800;display:flex;gap:10px;align-items:center}
+    .daTop .badge{display:inline-flex;align-items:center;gap:6px;background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.16);padding:4px 8px;border-radius:999px}
+    .daTop .gimkitCard{border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);border-radius:22px;box-shadow:var(--shadow2);overflow:hidden;position:relative}
+    .daTop .gimkitCard::before{
+      content:"";
+      position:absolute;inset:0;
+      background:
+        radial-gradient(900px 420px at 70% 0%, rgba(79,134,198,.25), transparent 60%),
+        linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.65));
+      pointer-events:none;
+    }
+    .daTop .gimkitInner{position:relative;padding:16px}
+    .daTop .gimkitTop{display:flex;align-items:center;justify-content:space-between;gap:12px}
+    .daTop .gimkitTitle{font-size:18px;font-weight:1000;margin:0}
+    .daTop .gimkitNote{color:rgba(255,255,255,.78);font-weight:800;margin-top:6px;line-height:1.45}
+    .daTop .gimkitImgWrap{margin-top:12px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.14);background:rgba(0,0,0,.35)}
+    .daTop .gimkitImgWrap img{width:100%;height:240px;object-fit:contain;display:block;background:rgba(0,0,0,.25)}
+    .daTop .sectionGrid{display:grid;grid-template-columns:1.05fr .95fr;gap:18px;margin-top:18px}
+    @media (max-width: 980px){ .daTop .sectionGrid{grid-template-columns:1fr;} }
+    .daTop .card{border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);border-radius:22px;box-shadow:var(--shadow2);overflow:hidden}
+    .daTop .cardHd{padding:14px 16px;border-bottom:1px solid rgba(255,255,255,.10);display:flex;align-items:center;justify-content:space-between;gap:10px}
+    .daTop .cardHd h3{margin:0;font-size:18px;font-weight:1000}
+    .daTop .cardBody{padding:14px 16px}
+    .daTop .vGrid{display:grid;gap:10px}
+    .daTop .vRow{display:grid;grid-template-columns: 220px 1fr;gap:12px;align-items:start;padding:10px 10px;border-radius:16px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.10)}
+    @media (max-width: 740px){ .daTop .vRow{grid-template-columns:1fr;} }
+    .daTop .vTerm{font-weight:1000;color:#fff}
+    .daTop .vDef{color:rgba(255,255,255,.86);font-weight:750;line-height:1.45}
+    .daTop .pillBtn{appearance:none;border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-weight:1000;border-radius:999px;padding:8px 12px;cursor:pointer}
+    .daTop .pillBtn:hover{border-color:rgba(79,134,198,.6)}
+    .daTop .objective{font-weight:900;color:rgba(255,255,255,.92);line-height:1.5}
+    .daTop .qod{margin-top:10px;padding:12px;border-radius:18px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.10)}
+    .daTop .qod h4{margin:0 0 6px;font-size:16px;font-weight:1000}
+    .daTop .stems{margin:8px 0 0;padding-left:18px;color:rgba(255,255,255,.88);font-weight:800;line-height:1.55}
+    .daTop .carouselWrap{position:relative}
+    .daTop .rail{display:flex;gap:12px;overflow:auto;padding:12px 6px 14px;scroll-snap-type:x mandatory}
+    .daTop .rail::-webkit-scrollbar{height:10px}
+    .daTop .rail::-webkit-scrollbar-thumb{background:rgba(255,255,255,.14);border-radius:999px}
+    .daTop .mediaCard{min-width:260px;max-width:260px;scroll-snap-align:start;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);cursor:pointer}
+    .daTop .mediaCard:hover{transform:translateY(-1px);border-color:rgba(79,134,198,.55)}
+    .daTop .mediaThumb{height:150px;background:#111}
+    .daTop .mediaThumb img{width:100%;height:100%;object-fit:cover;display:block}
+    .daTop .mediaInfo{padding:10px 12px}
+    .daTop .mediaTitle{font-weight:1000}
+    .daTop .mediaMeta{margin-top:4px;color:rgba(255,255,255,.78);font-weight:800;font-size:12px;display:flex;gap:8px;align-items:center}
+    .daTop .typeTag{background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:3px 8px}
+    .daTop .navBtn{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:999px;border:1px solid rgba(255,255,255,.18);background:rgba(0,0,0,.45);color:#fff;font-weight:1000;display:flex;align-items:center;justify-content:center;cursor:pointer}
+    .daTop .navBtn:hover{border-color:rgba(79,134,198,.6)}
+    .daTop .navBtn.left{left:-6px}
+    .daTop .navBtn.right{right:-6px}
+    @media (max-width: 980px){ .daTop .navBtn{display:none} }
+    .daTop .tabs{display:flex;gap:8px;flex-wrap:wrap}
+    .daTop .tab{border:1px solid rgba(255,255,255,.18);background:rgba(255,255,255,.07);color:#fff;font-weight:1000;border-radius:999px;padding:7px 10px;cursor:pointer}
+    .daTop .tab[aria-selected="true"]{background:rgba(79,134,198,.22);border-color:rgba(79,134,198,.55)}
+    .daTop .makeGrid{display:grid;grid-template-columns: 1fr;gap:10px}
+    .daTop .makePanel{display:grid;grid-template-columns: 1fr 1fr;gap:14px;align-items:stretch}
+    @media (max-width: 980px){ .daTop .makePanel{grid-template-columns:1fr;} }
+    .daTop .makeDetails{border-radius:18px;background:rgba(0,0,0,.22);border:1px solid rgba(255,255,255,.10);padding:14px}
+    .daTop .makeDetails h4{margin:0 0 8px;font-size:16px;font-weight:1000}
+    .daTop .makeDetails p{margin:0;color:rgba(255,255,255,.88);font-weight:800;line-height:1.55}
+    .daTop .tagRow{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .daTop .tag{background:rgba(0,0,128,.24);border:1px solid rgba(79,134,198,.35);padding:6px 10px;border-radius:999px;font-weight:1000}
+    .daTop .daysRail{display:flex;gap:10px;overflow:auto;padding:10px 4px;scroll-snap-type:x mandatory}
+    .daTop .dayTile{scroll-snap-align:start;min-width:170px;border-radius:18px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.06);padding:10px 10px;text-align:left;cursor:pointer}
+    .daTop .dayTile:hover{border-color:rgba(79,134,198,.55)}
+    .daTop .dayTile.active{outline:3px solid rgba(246,195,67,.35);border-color:rgba(246,195,67,.55)}
+    .daTop .dayTop{font-weight:1000;color:rgba(255,255,255,.86)}
+    .daTop .dayTitle{margin-top:6px;font-weight:1000}
+    .daTop .footerBar{position:fixed;left:0;right:0;bottom:0;padding:12px 14px;background:rgba(0,0,0,.55);backdrop-filter: blur(10px);border-top:1px solid rgba(255,255,255,.12);display:flex;justify-content:center;z-index:50}
+    .daTop .footerInner{width:min(1320px, 100%);display:flex;gap:10px;flex-wrap:wrap;align-items:center;justify-content:space-between}
+    .daTop .footerBtns{display:flex;gap:10px;flex-wrap:wrap}
+    .daTop .jump{text-decoration:none}
+    .daTop .tiny{color:rgba(255,255,255,.70);font-weight:800;font-size:12px}
+    .daTop .kicker{color:rgba(255,255,255,.82);font-weight:900}
+  
+  
+/* ===============================
+   Vocabulary collapsed image ONLY
+   =============================== */
+
+.daTop #vocabulary .cardBody{
+  position: relative;
+}
+
+/* hidden by default */
+.daTop #vocabulary .cardBody::after{
+  content:"";
+  display:none;
+  height:180px;
+  border-radius:16px;
+  border:1px solid rgba(255,255,255,.12);
+
+  background:
+    linear-gradient(180deg, rgba(0,0,0,.25), rgba(0,0,0,.65)),
+    url("assets/minernew.png");
+  background-size:contain;
+  background-repeat:no-repeat;
+  background-position:center;
+
+  margin-top:0;
+}
+
+/* show ONLY when vocab is collapsed */
+.daTop #vocabulary .cardBody[style*="display: none"]::after{
+  display:block;
+}
+
+
+/* === VOCAB: vertical scroller (surgical) === */
+.daTop #vocabBody{
+  max-height: 420px;
+  overflow-y: auto;
+  padding-right: 6px;
+}
+.daTop #vocabBody::-webkit-scrollbar{ width:10px; }
+.daTop #vocabBody::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.18);
+  border-radius: 999px;
+}
+
+
+/* === VOCAB: compact rows for max visibility (surgical) === */
+.daTop #vocabBody{ max-height: 520px; } /* slightly taller */
+.daTop #vocabBody .vGrid{ gap: 6px; }
+.daTop .vRow{
+  padding: 6px 8px;
+  border-radius: 14px;
+  grid-template-columns: 190px 1fr;
+  gap: 10px;
+}
+.daTop .vTerm{
+  font-size: 14px;
+  line-height: 1.15;
+}
+.daTop .vDef{
+  font-size: 13px;
+  line-height: 1.25;
+}
+@media (max-width: 740px){
+  .daTop .vRow{ grid-template-columns: 1fr; }
+}
+
+
+/* === FINAL OVERRIDE: Navy/Royal text -> Columbia === */
+.daTop h3,
+.daTop h4,
+#vocabulary .cardHd h3,
+.daTop .qod h4,
+.daTop .qod > div{
+  color: var(--columbia) !important;
+}
+
+
+/* === SPACING FIX: normalize gap above Tools section === */
+.daTop + .curriculumBlock{
+  margin-top: 24px !important;
+}
+
+.sectionGrid{
+  margin-bottom: 24px !important;
+}
+
+
+/* === FINAL LABEL COLOR FIX: force Columbia blue === */
+.daTop .projTitle,                         /* Digital Art title */
+.daTop .h2,                                /* Overview */
+.daTop .gimkitTitle,                       /* Gimkit header */
+.daTop .sectionGrid .cardHd h3,            /* Tools / Project Tools headers */
+.daTop .sectionTitle h2,                   /* Recommended Links (ranked) */
+.curriculumBlock h2                        /* Tools section */
+{
+  color: var(--columbia) !important;
+}
+
+
+/* === FIX: remaining white labels -> Columbia === */
+
+/* Recommended Links (ranked) */
+.sectionTitle h2,
+.sectionTitle{
+  color: var(--columbia) !important;
+}
+
+/* Project Tools (curated) – tools registry header */
+.curriculumBlock h2,
+.toolsGrid ~ h2,
+.toolsGridHeader,
+#tools h2{
+  color: var(--columbia) !important;
+}
+
+
+/* === LAYOUT MATCH: Daily Learning Objective block === */
+
+/* Card header tighter + clearly owns the block */
+#daily .cardHd{
+  padding-bottom: 6px !important;
+}
+
+/* Title spacing: more space below than inner items */
+#daily .cardHd h3{
+  margin-bottom: 10px !important;
+}
+
+/* Day selector pills sit directly under title */
+#daily .tabs{
+  margin-top: 0 !important;
+  gap: 6px;
+}
+
+/* Objective sentence hugs pills */
+#daily .objective{
+  margin-top: 8px !important;
+}
+
+/* Question of the Day block is nested, not separated */
+#daily .qod{
+  margin-top: 12px !important;
+}
+
+/* Sentence stems stay tight */
+#daily .stems{
+  margin-top: 4px !important;
+}
+
+
+/* === FIX: Stack DLO title + day pills vertically (match screenshot) === */
+
+/* Make header content vertical instead of side-by-side */
+#daily .cardHd{
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: flex-start !important;
+  gap: 6px !important;
+}
+
+/* Ensure title owns the block */
+#daily .cardHd h3{
+  margin: 0 0 4px 0 !important;
+  text-align: left !important;
+  width: 100%;
+}
+
+/* Day pills directly UNDER title */
+#daily .cardHd .tabs{
+  width: 100%;
+  justify-content: flex-start !important;
+  margin: 0 !important;
+}
+
+/* Remove any accidental spacing that pushes pills right */
+#daily .cardHd > *{
+  margin-left: 0 !important;
+}
+
+
+/* === FIX: QOD prompt text must be white (label stays Columbia) === */
+
+/* The actual question text under "Question of the Day" */
+#daily .qod .objective{
+  color: #ffffff !important;
+}
+
+
+/* === HEADING FONT SIZES (single source of truth: vars above) === */
+.curriculumBlock h2{ font-size: var(--H_SECTION) !important; }
+.daTop .cardHd h3{ font-size: var(--H_CARD) !important; }
+.daTop .sectionGrid .cardHd h3{ font-size: var(--H_CARD) !important; }
+.daTop .gimkitTitle{ font-size: var(--H_GIMKIT) !important; }
+
+
+/* === UNIFY: Overview heading uses section scale === */
+
+/* === UNIFY: Recommended Links (ranked) uses section heading scale === */
+.sectionTitle h2{
+  font-size: var(--H_SECTION) !important;
+  line-height: 1.15;
+  font-weight: 1000;
+}
+
+.daTop .h2,
+#overview h2,
+#overview .h2{
+  font-size: var(--H_SECTION) !important;
+  line-height: 1.15;
+}
+
+
+/* === FINAL UNIFY: Recommended Links spacing + scale === */
+.sectionHeader{
+  margin-top: 28px;
+  margin-bottom: 12px;
+}
+.sectionHeader h2{
+  font-size: var(--H_SECTION);
+  color: var(--C_COLUMBIA);
+  font-weight: 1000;
+}
+
+
+/* === Gimkit tiles clickable === */
+.gimkit-link{
+  display:block;
+  text-decoration:none;
+  color:inherit;
+}
+.gimkit-link:focus-visible{
+  outline:3px solid rgba(79,134,198,.8);
+  outline-offset:6px;
+}
+
+</style>
+
+<style id="headingScaleOverrides">
+
+/* === GIMKIT SCROLLER: filename pill (ULHC) === */
+
+/* === GIMKIT SCROLLER: filename pill matches MEDIA pills (.daTop .pillBtn) === */
+.gimkitScroller .gimPill{
+  position:absolute;
+  top:10px;
+  left:10px;
+  z-index:2;
+  max-width: calc(100% - 20px);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  pointer-events:none;
+
+  /* match MEDIA pill styling */
+  border: 1px solid rgba(255,255,255,.18);
+  background: rgba(255,255,255,.07);
+  color: rgba(0,0,0,.85);
+  font-weight: 1000;
+  border-radius: 999px;
+  padding: 8px 12px;
+
+  /* small adjustment for overlay readability */
+  backdrop-filter: blur(6px);
+  box-shadow: 0 10px 22px rgba(0,0,0,.35);
+  font-size: 13px;
+  line-height: 1;
+}
+
+.gimkitScroller .gimItem{
+  position: relative;
+  overflow: hidden;
+}
+/* === GIMKIT MEDIA SCROLLER (replaces single image) === */
+.gimkitScroller{
+  width: 100%;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(0,0,0,.22);
+  padding: 12px;
+  overflow: hidden;
+}
+.gimkitScroller .gimTrack{
+  display: flex;
+  gap: 12px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 6px;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+}
+.gimkitScroller .gimTrack::-webkit-scrollbar{
+  height: 10px;
+}
+.gimkitScroller .gimTrack::-webkit-scrollbar-thumb{
+  background: rgba(255,255,255,.20);
+  border-radius: 999px;
+}
+.gimkitScroller .gimItem{
+  flex: 0 0 auto;
+  width: 220px;
+  height: 220px;
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,.14);
+  background: rgba(255,255,255,.06);
+  box-shadow: 0 10px 26px rgba(0,0,0,.28);
+  display: grid;
+  place-items: center;
+  scroll-snap-align: start;
+  text-decoration: none;
+}
+.gimkitScroller .gimItem img{
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  border-radius: 18px;
+}
+
+
+/* === HEADING SCALE (EDIT HERE) === */
+:root{
+  --H_SECTION: 30px;  /* Overview, Tools, major section headings */
+  --H_CARD:    28px;  /* Daily Learning Objective, Vocabulary, Project Tools */
+  --H_GIMKIT:  28px;  /* Gimkit! */
+}
+
+/* === APPLY SCALE === */
+.curriculumBlock h2{ font-size: var(--H_SECTION) !important; }
+.daTop .h2, #overview h2, #overview .h2{ font-size: var(--H_SECTION) !important; line-height:1.15; }
+
+.daTop .cardHd h3{ font-size: var(--H_CARD) !important; }
+.daTop .sectionGrid .cardHd h3{ font-size: var(--H_CARD) !important; }
+
+.daTop .gimkitTitle{ font-size: var(--H_GIMKIT) !important; }
+
+/* Project Tools (curated) heading (tools registry) */
+#tools h2,
+.toolsGridHeader,
+.toolsGrid ~ h2{
+  font-size: var(--H_CARD) !important;
+}
+
+</style>
+</head>
+<body data-project="project-06">
+<div id="marqueeBar"><div id="marqueeInner"><span id="marqueeText">(Loading marquee…)</span></div></div>
+
+<img alt="Mascot" class="mascotCorner" src="assets/mascot.png"/>
+<div class="pageWrap">
+<a class="backLink" href="index.html">← Back to projects</a>
+<div class="pageTop">
+<div>
+<div class="pageTitle">Digital Art</div>
+<div class="pageSub" id="subline">Tools from registry</div>
+<div class="pageSub" id="markerLine"></div>
+</div>
+</div>
+<!-- ===================== MOCKUP CARD FEATURES (BOLTED ON) ===================== -->
+<div class="daTop">
+<!-- QUICK LAUNCH (from home page) -->
+<!-- QUICK LAUNCH -->
+    <div class="hero">
+      <div class="quickBar">
+        <button class="qArrow left" id="qLeft" type="button" aria-label="Scroll quick launch left">‹</button>
+        <div class="quick" id="quickLaunch" aria-label="Quick launch links"></div>
+        <button class="qArrow right" id="qRight" type="button" aria-label="Scroll quick launch right">›</button>
+      </div>
+    
+<!-- END QUICK LAUNCH -->
+
+<div class="heroGrid">
+<section aria-label="Header" class="heroCard">
+<div class="heroInner">
+<div class="titleRow">
+<div>
+<h1 class="projTitle">Coding & Programming</h1>
+</div>
+</div>
+<div class="overviewCard" id="overview">
+<div class="overviewTop">
+<div class="h2">Overview</div>
+</div>
+<p class="lead" id="overviewLead"></p>
+<div aria-label="Prominent inspiration thumbnails" class="thumbRow" id="thumbRow"></div>
+</div>
+</div>
+</section>
+<aside aria-label="Gimkit character zone" class="gimkitCard">
+<div class="gimkitInner">
+<div class="gimkitTop">
+<h2 class="gimkitTitle">Gimkit!</h2>
+</div>
+<div class="gimkitNote">
+            Bell Work: Days 1 - 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test: Day 7
+          </div>
+<div class="gimkitScroller" role="region" aria-label="Gimkit media scroller">
+  <div class="gimTrack">
+    
+    
+    
+</div>
+</div>
+</aside>
+</div>
+<div class="sectionGrid">
+<section aria-label="Daily Learning Objective" class="card" id="daily">
+<div class="cardHd">
+<h3>Daily Learning Objective</h3>
+<div aria-label="Day selector" class="tabs" id="dayTabs" role="tablist"></div>
+</div>
+<div class="cardBody">
+<div class="objective" id="dayObjective"></div>
+<div class="qod">
+<h4>Question of the Day</h4>
+<div class="objective" id="dayQod"></div>
+<div style="margin-top:10px;font-weight:1000">Sentence Stems</div>
+<ul class="stems" id="dayStems"></ul>
+</div>
+</div>
+</section>
+<section aria-label="Vocabulary" class="card" id="vocabulary">
+<div class="cardHd">
+<h3>Vocabulary</h3>
+</div>
+<div class="cardBody" id="vocabBody">
+<div class="vGrid" id="vocabGrid"></div>
+</div>
+</section>
+</div>
+
+<!-- ===================== END MOCKUP CARD FEATURES ===================== -->
+<!-- ===================== DIGITAL ART — CURRICULUM CONTENT ===================== -->
+
+
+
+<section class="curriculumBlock">
+<h2>Tools</h2>
+<p class="subtleNote">
+    The tools below support the <span id="toolsProjectName">project</span> curriculum. Choose one or more to complete your work.
+  </p>
+</section>
+<!-- ===================== END DIGITAL ART — CURRICULUM CONTENT ===================== -->
+<div class="toolsGrid" id="toolsGrid"></div>
+
+<div class="sectionTitle">
+  <h2>Latest uploads for <span class="registryProjectName">this project</span></h2>
+  <span id="registryProjectCount">0 uploads</span>
+</div>
+
+<div class="scroller">
+  <div class="track" id="registryProjectScroller" aria-label="Project uploads from the Registry sheet"></div>
+</div>
+
+<div class="footer"><span id="footerProjectName"></span> page (registry-driven). • © 2026 Rick Radle. Licensed for use at Trinidad Middle School STEM. Not for redistribution.</div>
+</div>
+<script id="daTopMockupCardsScript">
+
+    // ===================== DATA (extracted + placeholders) =====================
+    const PAGE_DATA = {"project":"Coding & Programming","overview":"Learn how to give computers instructions using code and logic.","overviewMedia":[],"gimkit":{"title":"Gimkit!","subtitle":"Bell Work: Days 1 - 6&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Test: Day 7","items":[]},"days":[{"day":1,"objective":"Today you will explore coding tools try simple commands and see how instructions change what the computer does.","qod":"What did you discover about Coding & Programming today?","stems":[" Today I discovered that code can"," I noticed that when I change one line"],"make":{"title":"Make This Today","task":"Today you will explore coding tools try simple commands and see how instructions change what the computer does.","tags":[]}},{"day":2,"objective":"Today you will plan and set a SMART goal choose one small program you want to build or improve by the end of the week.","qod":"What is your SMART goal for your Coding & Programming project this week?","stems":[" My SMART goal for Coding is"," I think the key to achieving this SMART goal will be"],"make":{"title":"Make This Today","task":"Today you will plan and set a SMART goal choose one small program you want to build or improve by the end of the week.","tags":[]}},{"day":3,"objective":"Today you will build create steps, use variables, or start a loop to make your program work.","qod":"What did you build today, and what did you notice when you tested it?","stems":[" Today I built"," I noticed that"],"make":{"title":"Make This Today","task":"Today you will build create steps, use variables, or start a loop to make your program work.","tags":[]}},{"day":4,"objective":"Today you will debug and improve find bugs and make your program clearer or more reliable.","qod":"What problem did you fix today, and how did you fix it?","stems":[" I fixed a problem by"," I figured it out by"],"make":{"title":"Make This Today","task":"Today you will debug and improve find bugs and make your program clearer or more reliable.","tags":[]}},{"day":5,"objective":"Today you will try a new feature add an if/then choice, a function, or a new input to your program.","qod":"What new feature did you add today, and what happened?","stems":[" A new feature I added was"," After adding it I noticed that"],"make":{"title":"Make This Today","task":"Today you will try a new feature add an if/then choice, a function, or a new input to your program.","tags":[]}},{"day":6,"objective":"Today you will finalize clean up your code, add labels or comments, and make it ready to share.","qod":"What final improvements did you make today to prepare your code for sharing?","stems":[" A final improvement I made was"," This improvement helped my program by"],"make":{"title":"Make This Today","task":"Today you will finalize clean up your code, add labels or comments, and make it ready to share.","tags":[]}},{"day":7,"objective":"Today you will reflect on your SMART goal decide if you met it and what you would do differently next time.","qod":"Did you meet your SMART goal for Coding & Programming? What helped or held you back?","stems":[" I did / did not meet my SMART goal because"," Next time I will"],"make":{"title":"Make This Today","task":"Today you will reflect on your SMART goal decide if you met it and what you would do differently next time.","tags":[]}}],"vocab":[{"term":"Algorithm","def":"A set of steps to solve a problem"},{"term":"Sequence","def":"Steps in the correct order"},{"term":"Loop","def":"Code that repeats"},{"term":"Variable","def":"A place to store information in code"},{"term":"Function","def":"A block of code that does a job"},{"term":"Debug","def":"To find and fix mistakes in code"},{"term":"Syntax","def":"Rules for how code must be written"},{"term":"Conditional","def":"An if/then choice in code"},{"term":"Input","def":"Information you give a program"},{"term":"Output","def":"What a program shows or does"},{"term":"Program","def":"A set of instructions for a computer"},{"term":"Event","def":"An action like a click that triggers code"},{"term":"Bug","def":"A mistake that causes problems"},{"term":"Command","def":"An instruction you give the computer"},{"term":"Logic","def":"Thinking using rules and reasons"}],"inspiration":[]};
+
+    // ===================== HELPERS =====================
+    const $ = (sel, el=document) => el.querySelector(sel);
+    const $$ = (sel, el=document) => Array.from(el.querySelectorAll(sel));
+
+    function openLink(url){
+      window.open(url, "_blank", "noopener,noreferrer");
+    }
+
+    function mediaCard(item){
+      const meta = item.duration || item.meta || "";
+      const type = (item.type || "link").toUpperCase();
+      const div = document.createElement("div");
+      div.className = "mediaCard";
+      div.tabIndex = 0;
+      div.setAttribute("role","link");
+      div.setAttribute("aria-label", item.title);
+      div.innerHTML = `
+        <div class="mediaThumb"><img src="${item.thumb}" alt=""></div>
+        <div class="mediaInfo">
+          <div class="mediaTitle">${item.title}</div>
+          <div class="mediaMeta">
+            <span class="typeTag">${type}</span>
+            <span>${meta}</span>
+          </div>
+        </div>
+      `;
+      div.addEventListener("click", ()=>openLink(item.href));
+      div.addEventListener("keydown", (e)=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); openLink(item.href); } });
+      return div;
+    }
+
+    function scrollRail(id, dir){
+      const el = document.getElementById(id);
+      if(!el) return;
+      const amt = Math.max(320, el.clientWidth * 0.75);
+      el.scrollBy({ left: dir * amt, behavior: "smooth" });
+    }
+
+    // ===================== OVERVIEW (text + thumbs) =====================
+    (function renderOverview(){
+      // overview text
+      var lead = document.getElementById("overviewLead");
+      if(lead && PAGE_DATA && PAGE_DATA.overview){ lead.textContent = PAGE_DATA.overview; }
+
+      // thumbs scroller
+      var row = document.getElementById("thumbRow");
+      if(!row) return;
+      var items = (PAGE_DATA && (PAGE_DATA.inspiration || PAGE_DATA.overviewMedia)) || [];
+      if(!Array.isArray(items)) items = [];
+
+      if(!items.length){
+        // keep the scroller visible even when we don't have curated media yet
+        row.innerHTML = '';
+        for(var k=0;k<3;k++){
+          var ph = document.createElement('div');
+          ph.className = 'thumbCard';
+          ph.innerHTML = `
+            <div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;background:linear-gradient(180deg, rgba(79,134,198,.15), rgba(0,0,0,.70));">
+              <div style="font-weight:1000">Teacher picks coming soon</div>
+              <div style="margin-top:4px;font-size:12px;font-weight:800;color:rgba(255,255,255,.78)">Add examples for this project</div>
+            </div>
+          `;
+          row.appendChild(ph);
+        }
+        return;
+      }
+      items.forEach(function(it){
+        if(!it) return;
+
+        // Auto-thumb for YouTube links (watch?v=... or youtu.be/...)
+        if(!it.thumb && it.href){
+          var href = String(it.href);
+          var vid = null;
+          var m;
+          m = href.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
+          if(m) vid = m[1];
+          if(!vid){
+            m = href.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
+            if(m) vid = m[1];
+          }
+          if(vid){
+            it.thumb = "https://i.ytimg.com/vi/" + vid + "/hqdefault.jpg";
+            if(!it.type) it.type = "Video";
+          }
+        }
+
+        // For YouTube SEARCH links (or any item without thumb), use a clean branded fallback image
+        if(!it.thumb){
+          it.thumb = "assets/youtube-thumb.svg";
+          if(!it.type) it.type = "YouTube";
+        }
+        var card = document.createElement("div");
+        card.className = "thumbCard";
+        var type = (it.type || "Link").toUpperCase();
+        var dur  = it.duration || it.meta || "";
+        card.innerHTML = `
+          <img src="${it.thumb}" alt="">
+          <div class="thumbOverlay">
+            <div class="thumbTitle">${it.title || ""}</div>
+            <div class="thumbMeta">
+              <span class="badge">${type}</span>
+              ${dur ? `<span class="badge">${dur}</span>` : ``}
+            </div>
+          </div>
+        `;
+        if(it.href) card.addEventListener("click", function(){ openLink(it.href); });
+        row.appendChild(card);
+      });
+    })();
+
+    // ===================== DAY TABS (objective + QOD + stems) =====================
+    let activeDay = 1;
+
+    function setDay(day){
+      activeDay = day;
+      const d = (Array.isArray(PAGE_DATA?.days) ? (PAGE_DATA.days.find(x=>x.day===day) || PAGE_DATA.days[0]) : null);
+      if(!d) return;
+      $("#dayObjective").textContent = `Day ${d.day} — ${d.objective}`;
+      $("#dayQod").textContent = d.qod;
+
+      const stems = $("#dayStems");
+      stems.innerHTML = "";
+      d.stems.forEach(s=>{
+        const li = document.createElement("li");
+        li.textContent = s;
+        stems.appendChild(li);
+      });
+
+      // tabs state
+      $$("#dayTabs .tab").forEach(t=>{
+        const td = Number(t.dataset.day);
+        t.setAttribute("aria-selected", td===day ? "true":"false");
+      });
+
+      // make tiles highlight
+      $$("#daysRail .dayTile").forEach(tile=>{
+        tile.classList.toggle("active", Number(tile.dataset.day)===day);
+      });
+
+      // make details reflect day
+      renderMakeDetails(day);
+    }
+
+    (function renderDayTabs(){
+      const tabs = $("#dayTabs");
+      if(!tabs || !Array.isArray(PAGE_DATA?.days) || !PAGE_DATA.days.length) return;
+      PAGE_DATA.days.forEach(d=>{
+        const b = document.createElement("button");
+        b.className = "tab";
+        b.type = "button";
+        b.dataset.day = String(d.day);
+        b.textContent = `Day ${d.day}`;
+        b.setAttribute("aria-selected", d.day===1 ? "true":"false");
+        b.addEventListener("click", ()=>setDay(d.day));
+        tabs.appendChild(b);
+      });
+      setDay(1);
+    })();
+
+    // ===================== CURATED MEDIA CAROUSEL =====================
+    let curatedFilter = "all";
+
+    function renderCurated(){
+      const rail = $("#curatedRail");
+      rail.innerHTML = "";
+      const items = (PAGE_DATA && Array.isArray(PAGE_DATA.curated) ? PAGE_DATA.curated : []).filter(it=> curatedFilter==="all" ? true : it.type===curatedFilter);
+      items.forEach(it=> rail.appendChild(mediaCard(it)));
+    }
+
+    (function initCurated(){
+      const rail = document.getElementById('curatedRail');
+      if(!rail || !Array.isArray(PAGE_DATA?.curated)) return;
+      renderCurated();
+      $$("#curated .tab").forEach(tab=>{
+        tab.addEventListener("click", ()=>{
+          $$("#curated .tab").forEach(t=>t.setAttribute("aria-selected","false"));
+          tab.setAttribute("aria-selected","true");
+          curatedFilter = tab.dataset.filter;
+          renderCurated();
+        });
+      });
+    })();
+
+    // ===================== MAKE THIS TODAY (7-day) =====================
+    function renderMakeDetails(day){
+      const d = PAGE_DATA.days.find(x=>x.day===day) || PAGE_DATA.days[0];
+      const box = $("#makeDetails");
+      if(!box) return;
+      if(!d.make) { box.innerHTML = ''; return; }
+      box.innerHTML = `
+        <h4>Day ${d.day} — ${d.make.title}</h4>
+        <p>${d.make.task}</p>
+        <div class="tagRow">
+          ${d.make.tags.map(t=>`<span class="tag">${t}</span>`).join("")}
+        </div>
+      `;
+    }
+
+    (function initMakeTiles(){
+      $$("#daysRail .dayTile").forEach(tile=>{
+        tile.addEventListener("click", ()=>setDay(Number(tile.dataset.day)));
+      });
+      renderMakeDetails(1);
+      $$("#daysRail .dayTile")[0]?.classList.add("active");
+    })();
+
+    // ===================== NAV BUTTONS =====================
+    (function navButtons(){
+      $$(".navBtn").forEach(btn=>{
+        btn.addEventListener("click", ()=>{
+          const railId = btn.dataset.rail;
+          const dir = btn.classList.contains("left") ? -1 : 1;
+          scrollRail(railId, dir);
+        });
+      });
+    })();
+
+    // ===================== PROJECT LABELS (Tools note, footer, Pro Tip) =====================
+    (function applyProjectLabels(){
+      try{
+        var name = (PAGE_DATA && (PAGE_DATA.project || PAGE_DATA.title)) || document.querySelector(".projTitle")?.textContent || "";
+        var tools = document.getElementById("toolsProjectName");
+        if(tools) tools.textContent = name;
+        var foot = document.getElementById("footerProjectName");
+        if(foot) foot.textContent = name;
+        var tip = document.getElementById("proTip");
+        var tipText = (PAGE_DATA && PAGE_DATA.gimkit && PAGE_DATA.gimkit.proTip) ? PAGE_DATA.gimkit.proTip : "Try at least two tools today — and save your best version.";
+        if(tip) tip.textContent = tipText;
+      }catch(e){}
+    })();
+
+  
+  </script>
+
+<script src="assets/project-page.js?v=2"></script>
+<script src="assets/resources.js?v=1"></script>
+<script src="assets/tools.js?v=7"></script>
+
+
+<script>
+/* Surgical header normalization:
+   - Remove "LOADED assets/tools.js ✅" marker
+   - Replace the top header text so it reads:
+     "Total: <N> Resources     Showing: <tools> curated tools • <links> links"
+   - Leaves all tooling behavior intact (no edits to assets/tools.js)
+*/
+(function(){
+  function getTotalResources(){
+    try{
+      if (window.RESOURCES && Array.isArray(window.RESOURCES)) return window.RESOURCES.length;
+      if (window.TMSCO_RESOURCES && Array.isArray(window.TMSCO_RESOURCES)) return window.TMSCO_RESOURCES.length;
+    }catch(e){}
+    return null;
+  }
+
+  function normalize(){
+    const titleEl = document.querySelector('.pageTitle');
+    const subEl   = document.getElementById('subline');
+    const markEl  = document.getElementById('markerLine');
+
+    if (!titleEl || !subEl) return false;
+
+    const subText = (subEl.textContent || '').replace(/\s+/g,' ').trim();
+    const showingMatch = subText.match(/Showing\s+\d+\s+curated tools\s+•\s+\d+\s+links/i);
+    if (!showingMatch) return false;
+
+    const total = getTotalResources();
+    if (!total) return false;
+
+    // OMIT requested: do not replace title with Total/Showing summary
+    subEl.textContent = '';
+    if (markEl) markEl.textContent = '';
+
+    return true;
+  }
+
+  function stripLoadedMarker(){
+    const kill = "LOADED assets/tools.js";
+    const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, null);
+    let n;
+    while((n = walker.nextNode())){
+      if (n.nodeValue && n.nodeValue.includes(kill)){
+        n.nodeValue = n.nodeValue.replace(/LOADED\s+assets\/tools\.js\s*✅?\s*•?\s*/g,'');
+      }
+    }
+  }
+
+  function run(){
+    stripLoadedMarker();
+    if (normalize()) return;
+
+    const target = document.querySelector('.pageTop') || document.body;
+    const obs = new MutationObserver(function(){
+      stripLoadedMarker();
+      if (normalize()){
+        obs.disconnect();
+      }
+    });
+    obs.observe(target, {subtree:true, childList:true, characterData:true});
+
+    let tries = 0;
+    const t = setInterval(function(){
+      tries++;
+      stripLoadedMarker();
+      if (normalize() || tries > 30) clearInterval(t);
+    }, 100);
+  }
+
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', run);
+  else run();
+})();
+</script>
+
+<script id="vocabRenderScript">
+/* === VOCAB: alphabetical render (bulletproof) === */
+(function(){
+  function escapeHtml(s){
+    return String(s)
+      .replace(/&/g,'&amp;')
+      .replace(/</g,'&lt;')
+      .replace(/>/g,'&gt;')
+      .replace(/"/g,'&quot;')
+      .replace(/'/g,'&#39;');
+  }
+
+  function tryRender(){
+    var grid = document.getElementById("vocabGrid");
+    if (!grid) return false;
+    if (typeof PAGE_DATA === "undefined" || !PAGE_DATA || !Array.isArray(PAGE_DATA.vocab)) return false;
+
+    var vocabSorted = PAGE_DATA.vocab
+      .filter(function(v){ return v && v.term && !/^Day\s+\d+/i.test(v.term); })
+      .slice()
+      .sort(function(a,b){ return String(a.term).localeCompare(String(b.term)); });
+
+    grid.innerHTML = vocabSorted.map(function(v){
+      return (
+        '<div class="vRow">' +
+          '<div class="vTerm">' + escapeHtml(v.term) + '</div>' +
+          '<div class="vDef">'  + escapeHtml(v.def)  + '</div>' +
+        '</div>'
+      );
+    }).join('');
+
+    return true;
+  }
+
+  function boot(){
+    // try immediately, then retry a few times in case scripts load later
+    if (tryRender()) return;
+    var tries = 0;
+    var t = setInterval(function(){
+      tries++;
+      if (tryRender() || tries >= 40) clearInterval(t);
+    }, 50);
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+
+  
+<script id="quickLaunchData">
+  window.TMSCO_DATA = window.TMSCO_DATA || {};
+  window.TMSCO_DATA.quickLaunch = [{"title": "Daily Work Submit", "url": "https://script.google.com/macros/s/AKfycby8qaeyYjEQ4hYRzZ6hxqKEPc8MtDLfqSBkeCPQ8kmhJK3HP4OmzB_ud-lyIjW5TR3l/exec"}, {"title": "Hall Pass", "url": "https://script.google.com/macros/s/AKfycbwFk1JS9zU6sGu73p0w596tuNTmmf8Tw9sbK2LfW3rgPPsjexl9du5h6fLednLT41gchw/exec"}, {"title": "Student Writing App", "url": "https://script.google.com/macros/s/AKfycbzZ8fDwyQDDkepwcqfutOfMlCMPb0vpHfDiFlG3AbbI8lHH7ejo-vZbZG8ZiJ-7IYTNJg/exec"}, {"title": "MineShaft Web Apps & Games", "url": "https://script.google.com/macros/s/AKfycbwJCDWhLkEfIVOJawNpOlVmA2vltzS7nEX96vubFu2Yyl-XLGeMKX1kyQxtr5uywUsJ/exec"}, {"title": "BlueTube Videos App", "url": "https://script.google.com/macros/s/AKfycbzVOeLdfgUq3pBM-OB2RnH-_vJaO2PtAPD2DytLsRvJrePrxGZMMNsMSuUkz8d2mdYUMg/exec"}, {"title": "Microsoft Office", "url": "https://www.office.com/"}];
+</script>
+<script src="assets/registry.js?v=1"></script>
+  <script src="assets/site.js?v=5"></script>
+
+<script id="columbiaLabelEnforcer">
+/* === Bulletproof: force specific labels to Columbia even if injected later === */
+(function(){
+  var TARGETS = new Set([
+    "Recommended Links (ranked)",
+    "Project Tools (curated)"
+  ]);
+
+  function getColumbia(){
+    try{
+      var v = getComputedStyle(document.documentElement).getPropertyValue("--columbia").trim();
+      return v || "#4F86C6";
+    }catch(e){
+      return "#4F86C6";
+    }
+  }
+
+  function paint(){
+    var col = getColumbia();
+    // Scan common heading/label nodes (cheap + effective)
+    var nodes = document.querySelectorAll("h1,h2,h3,h4,h5,div,span,label");
+    var hit = 0;
+    for (var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var t = (el.textContent || "").replace(/\s+/g," ").trim();
+      if (!t) continue;
+      if (TARGETS.has(t)){
+        el.style.color = col;
+        hit++;
+      }
+    }
+    return hit;
+  }
+
+  function boot(){
+    // try immediately, then retry while tools.js injects content
+    var tries = 0;
+    var maxTries = 80;   // ~4s at 50ms
+    var timer = setInterval(function(){
+      tries++;
+      paint();
+      if (tries >= maxTries) clearInterval(timer);
+    }, 50);
+
+    // also paint once after load (just in case)
+    window.addEventListener("load", function(){ paint(); }, {once:true});
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+
+
+<script id="headingScaleEnforcer">
+/* === Bulletproof: enforce heading scale for JS-injected labels === */
+(function(){
+  var TARGETS = new Set([
+    "Project Tools (curated)",
+    "Recommended Links (ranked)"
+  ]);
+
+  function getVar(name, fallback){
+    try{
+      var v = getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+      return v || fallback;
+    }catch(e){ return fallback; }
+  }
+
+  function paint(){
+    var hSection = getVar("--H_SECTION", "30px");
+    var nodes = document.querySelectorAll("h1,h2,h3,h4,h5,div,span,label,a");
+    for (var i=0;i<nodes.length;i++){
+      var el = nodes[i];
+      var t = (el.textContent || "").replace(/\s+/g," ").trim();
+      if (TARGETS.has(t)){
+        el.style.fontSize = hSection;
+        el.style.lineHeight = "1.15";
+        el.style.fontWeight = "900";
+      }
+    }
+  }
+
+  function boot(){
+    var tries = 0, maxTries = 120; // ~6s
+    var timer = setInterval(function(){
+      tries++;
+      paint();
+      if (tries >= maxTries) clearInterval(timer);
+    }, 50);
+    window.addEventListener("load", function(){ paint(); }, {once:true});
+  }
+
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", boot);
+  else boot();
+})();
+</script>
+
+
+<script id="gimkitFilenamePills">
+(function(){
+  function baseNameFromSrc(src){
+    try{
+      src = (src || "").split("#")[0].split("?")[0];
+      // decode %20 etc (safe)
+      try{ src = decodeURIComponent(src); }catch(e){}
+      var parts = src.split("/");
+      var file = parts[parts.length-1] || "";
+      // strip extension
+      file = file.replace(/\.[^.]+$/, "");
+      return file.trim();
+    }catch(e){
+      return "";
+    }
+  }
+
+  function apply(){
+    var items = document.querySelectorAll(".gimkitScroller .gimItem");
+    for(var i=0;i<items.length;i++){
+      var a = items[i];
+      if(a.querySelector(".gimPill")) continue;
+      var img = a.querySelector("img");
+      if(!img) continue;
+      var name = baseNameFromSrc(img.getAttribute("src")) ||
+                 baseNameFromSrc(img.getAttribute("data-fallback1")) ||
+                 (img.getAttribute("alt") || "").replace(/\.[^.]+$/, "").trim();
+      if(!name) continue;
+      var pill = document.createElement("span");
+      pill.className = "gimPill";
+      pill.textContent = name;
+      a.appendChild(pill);
+    }
+  }
+
+  // run now and also after a short delay in case anything swaps src via onerror
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", function(){
+      apply();
+      setTimeout(apply, 250);
+      setTimeout(apply, 1000);
+    });
+  }else{
+    apply();
+    setTimeout(apply, 250);
+    setTimeout(apply, 1000);
+  }
+})();
+</script>
+
+</body>
+</html>

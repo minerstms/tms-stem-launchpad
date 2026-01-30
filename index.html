@@ -1,0 +1,95 @@
+<!-- ===================== index.html (TOP) ===================== -->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>TMS STEM — Trinidad Miners</title>
+  <meta name="description" content="TMS STEM launchpad + project chooser.">
+  <link rel="stylesheet" href="assets/style.css?v=5">
+</head>
+<body>
+<div id="marqueeBar"><div id="marqueeInner"><span id="marqueeText">(Loading marquee…)</span></div></div>
+
+<img class="mascotCorner" src="assets/mascot.png" alt="Mascot"/>
+
+  <div class="container">
+    <div class="topbar">
+      <div class="brand">
+        <div class="title">TMS STEM — Trinidad Miners</div>
+        <div class="subtitle">Launchpad + Project Chooser</div>
+      </div>
+      <div class="searchRow">
+        <input id="search" type="search" placeholder="Search projects (ex: laser, coding, art)..." aria-label="Search projects">
+      </div>
+    </div>
+
+    <!-- QUICK LAUNCH -->
+    <div class="hero">
+      <div class="quickBar">
+        <button class="qArrow left" id="qLeft" type="button" aria-label="Scroll quick launch left">‹</button>
+        <div class="quick" id="quickLaunch" aria-label="Quick launch links"></div>
+        <button class="qArrow right" id="qRight" type="button" aria-label="Scroll quick launch right">›</button>
+      </div>
+    </div>
+
+    <div class="sectionTitle">
+      <h2>Filter by:</h2>
+      <span id="count">15 projects</span>
+    </div>
+
+    <div class="pills" id="pills" aria-label="Project category filters"></div>
+
+    <div class="scroller">
+      <div class="track" id="projectScroller"></div>
+    </div>
+    <div class="sectionTitle">
+      <h2>Latest uploads</h2>
+      <span id="registryCount">0 uploads</span>
+    </div>
+
+    <div class="scroller">
+      <div class="track" id="registryScroller" aria-label="Latest uploads from the Registry sheet"></div>
+    </div>
+
+
+    <div class="footer">
+      Preview site for classroom testing. Links open in a new tab. • © 2026 Rick Radle. Licensed for use at Trinidad Middle School STEM. Not for redistribution.
+    </div>
+  </div>
+
+  <script>
+    window.TMSCO_DATA={
+      "projects": [
+        {"id":1,"title":"Digital Art","tag":"Creative Tech","blurb":"Make digital art using AI, drawing, animation, and design tools.","url":"digital-art.html","slug":"1-digital-art","image":"assets/icons/1.png"},
+        {"id":2,"title":"Photography","tag":"Creative Tech","blurb":"Capture, edit, and publish photos with strong composition and storytelling.","url":"project-02.html","slug":"2-photography","image":"assets/icons/2.png"},
+        {"id":3,"title":"Music Production","tag":"Creative Tech","blurb":"Create beats, loops, and full tracks—then export and share.","url":"project-03.html","slug":"3-music-production","image":"assets/icons/3.png"},
+        {"id":4,"title":"Language & Website Design","tag":"Creative Tech","blurb":"Write, design, and publish pages that communicate clearly and look great.","url":"project-04.html","slug":"4-language-website-design","image":"assets/icons/4.png"},
+        {"id":5,"title":"Video Production","tag":"Creative Tech","blurb":"Plan, film, edit, and publish videos with clear structure and style.","url":"project-05.html","slug":"5-video-production","image":"assets/icons/5.png"},
+        {"id":6,"title":"Coding & Programming","tag":"Computing","blurb":"Build games, tools, and apps while learning logic and debugging.","url":"project-06.html","slug":"6-coding-programming","image":"assets/icons/6.png"},
+        {"id":7,"title":"Circuitry & Electronics","tag":"Engineering","blurb":"Design circuits, learn components, and make things light up and work.","url":"project-07.html","slug":"7-circuitry-electronics","image":"assets/icons/7.png"},
+        {"id":8,"title":"Robotics","tag":"Engineering","blurb":"Build robots that move, sense, and complete challenges.","url":"project-08.html","slug":"8-robotics","image":"assets/icons/8.png"},
+        {"id":9,"title":"Flight, Rockets, & Projectiles","tag":"Engineering","blurb":"Explore forces and motion through safe builds and launches.","url":"project-09.html","slug":"9-flight-rockets-projectiles","image":"assets/icons/9.png"},
+        {"id":10,"title":"3D Printing & Design","tag":"Fabrication","blurb":"Design in 3D, then print real objects you can hold.","url":"project-10.html","slug":"10-3d-printing-design","image":"assets/icons/10.png"},
+        {"id":11,"title":"Construction & Engineering","tag":"Engineering","blurb":"Design and build structures with constraints, testing, and iteration.","url":"project-11.html","slug":"11-construction-engineering","image":"assets/icons/11.png"},
+        {"id":12,"title":"Laser Engraving","tag":"Fabrication","blurb":"Create designs, then engrave/cut safely with precision.","url":"project-12.html","slug":"12-laser-engraving","image":"assets/icons/12.png"},
+        {"id":13,"title":"Resource Development","tag":"Computing","blurb":"Build systems and resources (including simulation-based learning).","url":"project-13.html","slug":"13-resource-development","image":"assets/icons/13.png"},
+        {"id":14,"title":"Cricut Design","tag":"Fabrication","blurb":"Design decals and cut projects using digital design workflows.","url":"project-14.html","slug":"14-cricut-design","image":"assets/icons/14.png"},
+        {"id":15,"title":"CNC Milling","tag":"Fabrication","blurb":"Design and machine parts with accuracy and safe tool habits.","url":"project-15.html","slug":"15-cnc-milling","image":"assets/icons/15.png"}
+      ],
+      "quickLaunch": [
+        {"title":"Daily Work Submit","url":"https://script.google.com/macros/s/AKfycby8qaeyYjEQ4hYRzZ6hxqKEPc8MtDLfqSBkeCPQ8kmhJK3HP4OmzB_ud-lyIjW5TR3l/exec"},
+        {"title":"Hall Pass","url":"https://script.google.com/macros/s/AKfycbwFk1JS9zU6sGu73p0w596tuNTmmf8Tw9sbK2LfW3rgPPsjexl9du5h6fLednLT41gchw/exec"},
+        {"title":"Student Writing App","url":"https://script.google.com/macros/s/AKfycbzZ8fDwyQDDkepwcqfutOfMlCMPb0vpHfDiFlG3AbbI8lHH7ejo-vZbZG8ZiJ-7IYTNJg/exec"},
+        {"title":"MineShaft Web Apps & Games","url":"https://script.google.com/macros/s/AKfycbwJCDWhLkEfIVOJawNpOlVmA2vltzS7nEX96vubFu2Yyl-XLGeMKX1kyQxtr5uywUsJ/exec"},
+        {"title":"BlueTube Videos App","url":"https://script.google.com/macros/s/AKfycbzVOeLdfgUq3pBM-OB2RnH-_vJaO2PtAPD2DytLsRvJrePrxGZMMNsMSuUkz8d2mdYUMg/exec"},
+        {"title":"Microsoft Office","url":"https://www.office.com/"}
+      ]
+    };
+  </script>
+
+  <script src="assets/registry.js?v=1"></script>
+  <script src="assets/site.js?v=5"></script>
+</body>
+</html>
+<!-- ===================== index.html (BOTTOM) ===================== -->
