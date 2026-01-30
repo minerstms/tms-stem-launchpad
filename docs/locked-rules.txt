@@ -1,0 +1,4 @@
+Locked rules / constraints (current)
+- Do not break the working marquee + sheet-read pipeline (gviz, gid=0, headers=1).
+- Keep the website visual theme/branding intact; changes should be incremental.
+- Continue using the Registry sheet as the single source of truth for scroller content.

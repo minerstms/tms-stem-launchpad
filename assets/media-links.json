@@ -1,0 +1,562 @@
+{
+  "project-01": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Digital Art \u2014 Drawing Tablet Basics",
+        "href": "https://www.youtube.com/watch?v=OFw4jcBjQKs",
+        "src": "https://img.youtube.com/vi/OFw4jcBjQKs/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "digital-art": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Digital Art \u2014 Drawing Tablet Basics",
+        "href": "https://www.youtube.com/watch?v=OFw4jcBjQKs",
+        "src": "https://img.youtube.com/vi/OFw4jcBjQKs/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-02": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Photography \u2014 Basics for Beginners",
+        "href": "https://www.youtube.com/watch?v=Na8YBLEYoio",
+        "src": "https://img.youtube.com/vi/Na8YBLEYoio/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-03": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Music Production \u2014 FL Studio Basics",
+        "href": "https://www.youtube.com/watch?v=BUjdnxgBgzM",
+        "src": "https://img.youtube.com/vi/BUjdnxgBgzM/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-04": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Website Design \u2014 Figma Basics",
+        "href": "https://www.youtube.com/watch?v=clSHs94hNNc",
+        "src": "https://img.youtube.com/vi/clSHs94hNNc/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-05": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Video Production \u2014 Beginner Video",
+        "href": "https://youtu.be/uut67cfOUD0",
+        "src": "https://img.youtube.com/vi/uut67cfOUD0/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-06": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Coding \u2014 Python Full Course (Beginners)",
+        "href": "https://www.youtube.com/watch?v=_uQrJ0TkZlc&vl=en",
+        "src": "https://img.youtube.com/vi/_uQrJ0TkZlc/hqdefault.jpg",
+        "priority": 50
+      }
+    ],
+    "curated": [
+      {
+        "label": "Scratch \u2014 Intro (Part 1)",
+        "href": "https://www.youtube.com/watch?v=sb-wF35TuvQ",
+        "src": "https://img.youtube.com/vi/sb-wF35TuvQ/hqdefault.jpg",
+        "priority": 60
+      }
+    ]
+  },
+  "project-07": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Circuits \u2014 Electronics Basics",
+        "href": "https://www.youtube.com/watch?v=Znqa5W5qmng",
+        "src": "https://img.youtube.com/vi/Znqa5W5qmng/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-08": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Robotics \u2014 Beginner Robot Build",
+        "href": "https://www.youtube.com/watch?v=xgQqXRAkhUU",
+        "src": "https://img.youtube.com/vi/xgQqXRAkhUU/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-09": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Rockets \u2014 Juno: New Origins Basics",
+        "href": "https://www.youtube.com/watch?v=F_cTl8NnlUA",
+        "src": "https://img.youtube.com/vi/F_cTl8NnlUA/hqdefault.jpg",
+        "priority": 50
+      }
+    ],
+    "curated": [
+      {
+        "label": "SimplePlanes \u2014 Step-by-Step Jet Tutorial",
+        "href": "https://www.youtube.com/watch?v=R9Ib5WApPPU",
+        "src": "https://img.youtube.com/vi/R9Ib5WApPPU/hqdefault.jpg",
+        "priority": 60
+      },
+      {
+        "label": "Juno: New Origins \u2014 Designer Tools (Part 1)",
+        "href": "https://www.youtube.com/watch?v=NC0MkcN71T8",
+        "src": "https://img.youtube.com/vi/NC0MkcN71T8/hqdefault.jpg",
+        "priority": 59
+      }
+    ]
+  },
+  "project-10": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "3D Printing \u2014 Beginner\u2019s Guide",
+        "href": "https://www.youtube.com/watch?v=B84CgaPdixc",
+        "src": "https://img.youtube.com/vi/B84CgaPdixc/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-11": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Engineering \u2014 What Makes Bridges Strong?",
+        "href": "https://www.youtube.com/watch?v=oVOnRPefcno",
+        "src": "https://img.youtube.com/vi/oVOnRPefcno/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-12": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Laser Engraving \u2014 Your Pick #1",
+        "href": "https://youtu.be/AgHuEsR4JxY",
+        "src": "https://img.youtube.com/vi/AgHuEsR4JxY/hqdefault.jpg",
+        "priority": 50
+      }
+    ],
+    "curated": [
+      {
+        "label": "Laser Engraving \u2014 Your Pick #2",
+        "href": "https://youtu.be/0JzHg4kL3zY",
+        "src": "https://img.youtube.com/vi/0JzHg4kL3zY/hqdefault.jpg",
+        "priority": 60
+      },
+      {
+        "label": "Laser Engraving \u2014 9-Step Crash Course",
+        "href": "https://www.youtube.com/watch?v=XOvLuwUj2Hc",
+        "src": "https://img.youtube.com/vi/XOvLuwUj2Hc/hqdefault.jpg",
+        "priority": 59
+      },
+      {
+        "label": "LightBurn \u2014 Beginner Tutorial",
+        "href": "https://www.youtube.com/watch?v=OueWAVqXbZc",
+        "src": "https://img.youtube.com/vi/OueWAVqXbZc/hqdefault.jpg",
+        "priority": 58
+      },
+      {
+        "label": "Laser Engraving \u2014 Beginner\u2192Pro Tips",
+        "href": "https://www.youtube.com/watch?v=j4JzVIm7Zjo",
+        "src": "https://img.youtube.com/vi/j4JzVIm7Zjo/hqdefault.jpg",
+        "priority": 57
+      }
+    ]
+  },
+  "project-13": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Resource Development \u2014 LinCity-NG Gameplay",
+        "href": "https://www.youtube.com/watch?v=vLmiqLxD2Eo",
+        "src": "https://img.youtube.com/vi/vLmiqLxD2Eo/hqdefault.jpg",
+        "priority": 50
+      }
+    ]
+  },
+  "project-14": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "Cricut \u2014 Your Pick",
+        "href": "https://youtu.be/aIIkKCDON_w",
+        "src": "https://img.youtube.com/vi/aIIkKCDON_w/hqdefault.jpg",
+        "priority": 50
+      }
+    ],
+    "curated": [
+      {
+        "label": "Cricut \u2014 Beginner Tutorial (Design Space)",
+        "href": "https://www.youtube.com/watch?v=NbiyCwB5rWE",
+        "src": "https://img.youtube.com/vi/NbiyCwB5rWE/hqdefault.jpg",
+        "priority": 60
+      }
+    ]
+  },
+  "project-15": {
+    "overviewMedia": [
+      {
+        "label": "Global \u2014 Welcome to TMS STEM",
+        "href": "https://youtu.be/kcEyVxUiV9c",
+        "src": "https://img.youtube.com/vi/kcEyVxUiV9c/hqdefault.jpg",
+        "priority": 100,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 STEM Motivation",
+        "href": "https://youtu.be/WuexkW1MD94",
+        "src": "https://img.youtube.com/vi/WuexkW1MD94/hqdefault.jpg",
+        "priority": 99,
+        "pinned": true
+      },
+      {
+        "label": "Global \u2014 Creativity & Making",
+        "href": "https://youtu.be/AHERYKesH80",
+        "src": "https://img.youtube.com/vi/AHERYKesH80/hqdefault.jpg",
+        "priority": 98,
+        "pinned": true
+      },
+      {
+        "label": "CNC \u2014 Your Pick",
+        "href": "https://youtu.be/lB_fyJ3HCZg",
+        "src": "https://img.youtube.com/vi/lB_fyJ3HCZg/hqdefault.jpg",
+        "priority": 50
+      }
+    ],
+    "curated": [
+      {
+        "label": "CNC Milling \u2014 Basics (Beginner)",
+        "href": "https://www.youtube.com/watch?v=cj0-wSGGe6g",
+        "src": "https://img.youtube.com/vi/cj0-wSGGe6g/hqdefault.jpg",
+        "priority": 60
+      }
+    ]
+  }
+}

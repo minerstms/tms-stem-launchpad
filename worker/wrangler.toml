@@ -1,0 +1,13 @@
+name = "tms-stem-youtube-api"
+main = "worker.js"
+compatibility_date = "2026-01-29"
+
+# Set secrets:
+#   wrangler secret put YOUTUBE_API_KEY
+# Optional:
+#   wrangler secret put PLAYLISTS_URL   (defaults to https://<your-site>/assets/playlists.json)
+
+# Route this Worker on your site:
+# routes = [
+#   { pattern = "YOURDOMAIN.COM/api/*", zone_name = "YOURDOMAIN.COM" }
+# ]

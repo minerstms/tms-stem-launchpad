@@ -1,0 +1,379 @@
+// ============================================================
+// TMS STEM — Shared Project Page Extensions (v1)
+// Purpose: one place for future global behaviors across ALL project pages.
+// Safe: currently does NOT change page behavior.
+// ============================================================
+// Resolve local asset paths from the site root (works for pretty URLs like
+// /project-05 as well as /project-05.html).
+function assetUrl(path){
+  var ver = window.__TMS_ASSET_VER__ || "1";
+  if (!path) return path;
+  // Leave absolute URLs untouched
+  if (/^(https?:)?\/\//i.test(path)) return path;
+
+  // Normalize to an absolute root path
+  var clean = String(path).replace(/^\/+/, "");
+  var url = "/" + clean;
+  var glue = (url.indexOf("?") >= 0) ? "&" : "?";
+  return url + glue + "v=" + encodeURIComponent(ver);
+}
+
+
+// ============================================================
+// HARDEN: Allow external thumbnail loads + stop referrer blocking (v1)
+// Why: Some hosts block hotlinked thumbnails when a referrer is sent.
+// This sets a site-wide no-referrer policy and makes <img> resilient.
+// ============================================================
+(function(){
+  try{
+    // Ensure referrer policy is set early (works even when pages are served from CF Pages)
+    var existing = document.querySelector('meta[name="referrer"]');
+    if (!existing){
+      var m = document.createElement("meta");
+      m.setAttribute("name","referrer");
+      m.setAttribute("content","no-referrer");
+      (document.head || document.documentElement).appendChild(m);
+    } else {
+      existing.setAttribute("content","no-referrer");
+    }
+  }catch(e){}
+})();
+
+(function(){
+  // Future: data-driven media scrollers, global heading controls, etc.
+})();
+
+
+// ============================================================
+// Data-driven media scrollers (v1)
+// Config (legacy): assets/media-links.json
+// Config (new): Cloudflare Worker /api/overview + assets/playlists.json
+// Supported: Gimkit scroller (.gimkitScroller)
+// ============================================================
+(function(){
+  function getProjectKey(){
+    // Prefer explicit override
+    if (document.documentElement && document.documentElement.getAttribute("data-project")) {
+      return document.documentElement.getAttribute("data-project").trim();
+    }
+    // Fall back to document title before " — "
+    var t = (document.title || "").split(" — ")[0].trim();
+    return t || "Digital Art";
+  }
+
+  function stripExt(name){
+    return (name || "").replace(/\.[^.]+$/, "");
+  }
+
+  function baseNameFromPath(p){
+    try{
+      p = (p || "").split("#")[0].split("?")[0];
+      try{ p = decodeURIComponent(p); }catch(e){}
+      var parts = p.split("/");
+      return stripExt(parts[parts.length-1] || "");
+    }catch(e){ return ""; }
+  }
+
+  function buildTile(item){
+    var a = document.createElement("a");
+    a.className = "gimkit-link gimItem";
+    a.href = item.href || "#";
+    a.target = "_blank";
+    a.rel = "noopener";
+
+    var img = document.createElement("img");
+    img.loading = "lazy";
+    // Harden thumbnail loading (YouTube thumbs often fail when referrers are sent)
+    img.referrerPolicy = "no-referrer";
+    img.crossOrigin = "anonymous";
+    img.src = (item && item.src) ? String(item.src).replace("https://img.youtube.com/","https://i.ytimg.com/") : "";
+    var label = item.label || baseNameFromPath(item.src);
+    img.alt = label || "";
+
+    a.appendChild(img);
+
+    // filename pill (uses existing page styling)
+    var pill = document.createElement("span");
+    pill.className = "gimPill";
+    pill.textContent = label || "";
+    a.appendChild(pill);
+
+    return a;
+  }
+
+  function applyGimkit(list){
+    var track = document.querySelector(".gimkitScroller .gimTrack");
+    if (!track) return;
+
+    // Always clear baked-in tiles so scroller is 100% data-driven
+    track.innerHTML = "";
+
+    // If empty, show a single placeholder tile
+    if (!Array.isArray(list) || !list.length){
+      track.appendChild(buildTile({ href:"#", src:"assets/youtube-thumb.svg", label:"Coming soon", type:"placeholder" }));
+      return;
+    }
+
+    // Replace with sorted tiles
+    var sorted = sortMedia(list);
+    for (var i=0;i<sorted.length;i++){
+      track.appendChild(buildTile(sorted[i]));
+    }
+  }
+
+  function normBool(v){ return v===true || v==="true" || v==="TRUE" || v===1 || v==="1"; }
+  function normNum(v){ var n = Number(v); return isFinite(n)? n : 0; }
+
+  function sortMedia(list){
+    return (list||[]).slice().sort(function(a,b){
+      var ap = normBool(a && a.pinned), bp = normBool(b && b.pinned);
+      if (ap !== bp) return bp - ap;                 // pinned first
+      var apr = normNum(a && a.priority), bpr = normNum(b && b.priority);
+      if (apr !== bpr) return bpr - apr;             // higher priority first
+      // stable-ish fallback: label/title
+      var al = ((a && (a.label || a.title)) || "").toString().toLowerCase();
+      var bl = ((b && (b.label || b.title)) || "").toString().toLowerCase();
+      if (al < bl) return -1;
+      if (al > bl) return 1;
+      return 0;
+    });
+  }
+
+  function applyThumbRow(list){
+    var row = document.getElementById("thumbRow");
+    if (!row) return;
+
+    // Always clear baked-in tiles so scroller is 100% data-driven
+    row.innerHTML = "";
+
+    // If empty, show a single placeholder tile
+    if (!Array.isArray(list) || !list.length){
+      var ph = buildTile({ href:"#", src:"assets/youtube-thumb.svg", label:"Coming soon", type:"placeholder" });
+      ph.classList.add("ovTile");
+      row.appendChild(ph);
+      return;
+    }
+
+    var sorted = sortMedia(list);
+    for (var i=0;i<sorted.length;i++){
+      var tile = buildTile(sorted[i]);
+      tile.classList.add("ovTile");
+      row.appendChild(tile);
+    }
+  }
+
+  function applyCurated(list){
+    // Curated grid uses the same "thumb tiles" container if present, otherwise ignore.
+    // (Keeps this upgrade non-breaking across all project pages.)
+    var wrap = document.getElementById("curatedRow") || document.getElementById("curatedGrid");
+    if (!wrap) return;
+    if (!Array.isArray(list) || !list.length) return;
+
+    wrap.innerHTML = "";
+    var sorted = sortMedia(list);
+    for (var i=0;i<sorted.length;i++){
+      wrap.appendChild(buildTile(sorted[i]));
+    }
+  }
+
+  function applyInspiration(list){
+    var wrap = document.getElementById("inspirationRow") || document.getElementById("inspireRow");
+    if (!wrap) return;
+    if (!Array.isArray(list) || !list.length) return;
+
+    wrap.innerHTML = "";
+    var sorted = sortMedia(list);
+    for (var i=0;i<sorted.length;i++){
+      wrap.appendChild(buildTile(sorted[i]));
+    }
+  }
+
+  function ensureCss(){
+    // Minimal focus styling only; avoids fighting your locked CSS
+    if (document.getElementById("mediaScrollerSharedCss")) return;
+    var css = document.createElement("style");
+    css.id = "mediaScrollerSharedCss";
+    css.textContent = `
+.gimkit-link{ display:block; text-decoration:none; color:inherit; }
+.gimkit-link:focus-visible{ outline:3px solid rgba(79,134,198,.8); outline-offset:6px; }
+`;
+    document.head.appendChild(css);
+  }
+
+  async function init(){
+    ensureCss();
+    var key = getProjectKey();
+
+    // Gimkit (data-driven) — reads assets/gimkit.json and renders ONLY if a join URL exists.
+      try{
+        var gRes = await fetch(assetUrl("assets/gimkit.json?v=1"), {cache:"no-store"});
+        if (gRes.ok){
+          var gCfg = await gRes.json();
+          var slug = (document.body && document.body.getAttribute("data-project")) || key;
+          var gList = (gCfg && gCfg.projects && (gCfg.projects[slug] || gCfg.projects[key])) || [];
+          if (Array.isArray(gList) && gList.length){
+            
+          // ----- Gimkit thumbnail manifest (LOCKED) -----
+          var gimkitFiles = [];
+          try{
+            var mfRes = await fetch(assetUrl("assets/gimkit-manifest.json?v=2"), {cache:"no-store"});
+            if (mfRes.ok){
+              var mf = await mfRes.json();
+              if (mf && Array.isArray(mf.files)) gimkitFiles = mf.files.slice();
+            }
+          }catch(e){ /* silent */ }
+
+          function hash32(str){
+            var h = 0;
+            for (var i=0;i<str.length;i++){
+              h = ((h<<5) - h) + str.charCodeAt(i);
+              h |= 0;
+            }
+            return h;
+          }
+
+          function pickGimkitThumb(joinUrl, idx, slug, files){
+            files = Array.isArray(files) ? files : [];
+            if (!files.length){
+              // fallback to legacy convention (may not exist)
+              return (slug + "-" + (idx+1) + ".gif");
+            }
+            var key = String(joinUrl || ("__NOJOIN__:" + slug + ":" + idx));
+            var h = Math.abs(hash32(key));
+            return files[h % files.length];
+          }
+
+          var tiles = gList.map(function(it, idx){
+              return {
+                href: it.join,
+                // Thumbnails: deterministic pick from assets/gimkit-manifest.json (works for .gif/.webp/.png/.jpg)
+                // Ensures the SAME join URL uses the SAME thumbnail across ALL pages.
+                src: assetUrl("assets/gimkit/" + pickGimkitThumb(it && it.join, idx, slug, gimkitFiles)),
+                label: it.title || ("Gimkit — " + slug + " #" + (idx+1))
+              };
+            });
+            applyGimkit(tiles);
+          }
+        }
+      }catch(e){ /* silent */ }
+      
+    // ============================================================
+    // Overview scroller (NEW): Cloudflare Worker playlist aggregator
+    // Endpoint: /api/overview?project=<key>
+    // Must never break the page if missing.
+    // ============================================================
+    try{
+      var wres = await fetch("/api/overview?project=" + encodeURIComponent(key), {cache:"no-store"});
+      if (wres && wres.ok){
+        var wdata = await wres.json();
+        if (wdata && wdata.overviewMedia && wdata.overviewMedia.length){
+          applyThumbRow(wdata.overviewMedia);
+          // NOTE: curated/inspiration remain supported via legacy JSON if you still use them.
+        }
+      }
+    }catch(e){ /* silent */ }
+
+    // ============================================================
+    // Overview / curated / inspiration (LEGACY: media-links.json)
+    // Must never break the page if missing or malformed.
+    // Supports both schemas:
+    //  A) { "_GLOBAL": {...}, "project-02": {...} }
+    //  B) { "projects": { ...same as A... } }
+    try{
+      var res = await fetch(assetUrl("assets/media-links.json?v=1"), {cache:"no-store"});
+      if (res.ok){
+        var rawCfg = await res.json();
+        var cfg = (rawCfg && rawCfg.projects) ? rawCfg.projects : rawCfg;
+
+        var proj = cfg && cfg[key];
+        // Project-level
+        if (proj){
+          if (proj.overviewMedia) applyThumbRow(proj.overviewMedia);
+          if (proj.curated) applyCurated(proj.curated);
+          if (proj.inspiration) applyInspiration(proj.inspiration);
+        }
+
+        // Optional global fallbacks
+        var glob = cfg && cfg["_GLOBAL"];
+        if (glob){
+          if (glob.overviewMedia) applyThumbRow(glob.overviewMedia);
+          if (glob.curated) applyCurated(glob.curated);
+          if (glob.inspiration) applyInspiration(glob.inspiration);
+        }
+      }
+    }catch(e){
+      // silent: page should still work with baked-in markup
+    }
+  }
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", init);
+  } else {
+    init();
+  }
+})();
+
+
+// ============================================================
+// Overview Media Thumbnail Fallback (v1)
+// Purpose: If some YouTube thumbnails fail (private/removed/blocked),
+// swap to mqdefault, then to a branded placeholder.
+// Scope: Only images inside #thumbRow (the Overview scroller).
+// ============================================================
+(function(){
+  var PLACEHOLDER = assetUrl("assets/youtube-thumb.svg");
+
+  function nextThumb(src){
+    if (!src) return PLACEHOLDER;
+    // If hqdefault fails, try mqdefault
+    if (src.indexOf("/hqdefault.jpg") !== -1) return src.replace("/hqdefault.jpg","/mqdefault.jpg");
+    // If mqdefault (or anything else) fails, go placeholder
+    return PLACEHOLDER;
+  }
+
+  function handleImgError(img){
+    try{
+      if (!img || img.__tmsThumbFailHandled) return;
+      var src = img.getAttribute("src") || "";
+      var next = nextThumb(src);
+
+      // Prevent loops: if already placeholder, stop
+      if (src.indexOf("assets/youtube-thumb.svg") !== -1) return;
+
+      // Mark if moving to placeholder so we don't loop endlessly
+      if (next === PLACEHOLDER) img.__tmsThumbFailHandled = true;
+
+      img.setAttribute("src", next);
+    }catch(e){}
+  }
+
+  function bindExisting(){
+    var row = document.getElementById("thumbRow");
+    if (!row) return;
+
+    // Bind per-image onerror (most reliable)
+    var imgs = row.querySelectorAll("img");
+    imgs.forEach(function(img){
+      // If browser already errored before we bind, the capture listener below will still catch.
+      img.addEventListener("error", function(){ handleImgError(img); }, true);
+    });
+  }
+
+  // Capture-phase error listener (error does NOT bubble)
+  window.addEventListener("error", function(ev){
+    var t = ev && ev.target;
+    if (!t || t.tagName !== "IMG") return;
+
+    // Only affect Overview scroller thumbs
+    var row = document.getElementById("thumbRow");
+    if (!row || !row.contains(t)) return;
+
+    handleImgError(t);
+  }, true);
+
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", bindExisting);
+  } else {
+    bindExisting();
+  }
+})();

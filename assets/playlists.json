@@ -1,0 +1,98 @@
+{
+  "version": 1,
+  "globalsPlaylistId": "PLIvHxxWt49qskxUGBvoyYEEpGd2fG_s9R",
+  "mustVideos": {
+    "project-05": ["uut67cfOUD0"],
+    "project-12": ["AgHuEsR4JxY", "0JzHg4kL3zY"],
+    "project-14": ["aIIkKCDON_w"],
+    "project-15": ["lB_fyJ3HCZg"]
+  },
+  "projects": {
+    "digital-art": {
+      "playlistIds": [
+        "PLIvHxxWt49qvdxoI0nUS97hvAgEjjdes7"
+      ]
+    },
+    "project-02": {
+      "playlistIds": [
+        "PLIvHxxWt49qv6s6wQ8j27-3BNLA3vwjZH"
+      ]
+    },
+    "project-03": {
+      "playlistIds": [
+        "PLIvHxxWt49qspSpr0SrsIEgbXLmsh55l-",
+        "PLD-nTuvnC1rZJ5ao48pWSVsqLuV_JeWn6"
+      ]
+    },
+    "project-04": {
+      "playlistIds": [
+        "PLIvHxxWt49qsIcnpr9lSdlPEjj_GBgWaV"
+      ]
+    },
+    "project-05": {
+      "playlistIds": [
+        "PLIvHxxWt49quUqjbz_V3--_7Ur2aCR7_3"
+      ]
+    },
+    "project-06": {
+      "playlistIds": [
+        "PLNIdDxctsZe9gVqjHHj_TxzHfElHszdst",
+        "PLN2aXbvhyOSEnIGVitJlGdh-djSCsZ6fM"
+      ]
+    },
+    "project-07": {
+      "playlistIds": [
+        "PLeVrdakJu3M43jB2WqKEL4_Hhn94LpOMT",
+        "PLIvHxxWt49qspSpr0SrsIEgbXLmsh55l-",
+        "PLIvHxxWt49qsIcnpr9lSdlPEjj_GBgWaV"
+      ]
+    },
+    "project-08": {
+      "playlistIds": [
+        "PLvEHQwOLYgKeJDqcHzhezVjxaqaRkEJmP",
+        "PL65kukZorPdNOxhkBYg9JH_F-9w9Xbp1D",
+        "PLIvHxxWt49qsyS9nr5TF3i99oAI4gpUK-"
+      ]
+    },
+    "project-09": {
+      "playlistIds": [
+        "PLWvf1nsJgpBKkNs4360VtD2Fkd64_t6r0",
+        "PLNYF3s_qKgfSbOowPVxK6AisLFcX9Lxtj",
+        "PLIvHxxWt49qvluRePyUQueBUA7lqMNnyr"
+      ]
+    },
+    "project-10": {
+      "playlistIds": [
+        "PLWrqQ7NBLxmCXnvjoYdn290c9GsK5qyPm",
+        "PLtmhShv-_MyKSWR-eIXjCqEVDjkhDoPyY",
+        "PL90LC6zq_Lzf9tHyFPzX_9OA35BFTfEBs"
+      ]
+    },
+    "project-11": {
+      "playlistIds": [
+        "PLg9lToc61ftpZjtoCJoPZ8gLyXVk1whOV",
+        "PLJdXTDAyIfNcJX6ufABBE77e_i-kmmxaC"
+      ]
+    },
+    "project-12": {
+      "playlistIds": [
+        "PL_1I1UNQ4oGa0w55C772Y1mC6F4f3ZcG6"
+      ]
+    },
+    "project-13": {
+      "playlistIds": [
+        "PLIvHxxWt49qu3w5AYUx9ho-mWQ1VuL3Bt"
+      ]
+    },
+    "project-14": {
+      "playlistIds": [
+        "PLIvHxxWt49qtqfKxMMiRwvgFdPCQw3hje"
+      ]
+    },
+    "project-15": {
+      "playlistIds": [
+        "PLIvHxxWt49qtwOXlaGww2P32coR4b2od7"
+      ]
+    }
+  }
+}

@@ -1,0 +1,30 @@
+TMS STEM Site — Zip Me Out Context Summary (LOCKED BASELINE)
+
+What is locked-in right now
+- The site reads the master Registry Google Sheet via Google gviz JSON feed.
+- Sheet ID: 1-SVEtDNnxj3GRybvDdUZEstjCBGIlxe2937h4woR_x0
+- Tab: gid=0
+- Critical parameter: headers=1 (so header names like 'marquee' are recognized)
+- Global marquee bar appears at the top of pages and reads the latest non-empty value from column I header: marquee
+- This behavior is confirmed working on the live Cloudflare Pages deployment.
+
+Baseline ZIP to continue from
+- This ZIP contains the working marquee + sheet-read baseline.
+- File: TMS_STEM_site_registry_marquee_BASELINEPATCH_v4.zip (now embedded in this zip-me-out package).
+
+Next work to do when you return
+1) Remove/stop using the old built-in YouTube video lists and Gimkit .gif assets that currently populate scrollers.
+2) Replace those scrollers so they render exclusively from the Registry sheet rows:
+   - Use thumbUrl (preferred) or imageViewUrl as fallback for images.
+   - Use title + url for card content.
+   - Filter by projects column so each project page shows its own items.
+
+Priority / ordering requirement (IMPORTANT)
+- Add a column to the sheet to control ordering so new items can appear first in a scroller.
+  Recommended column name: priority
+  Suggested rule: higher number = earlier in scroller (e.g., 100 at top, 0 default).
+  Alternative: pinned (TRUE/FALSE) + sortOrder (number).
+  We will implement: pinned first, then priority desc, then createdAt desc.
+
+Notes
+- The site is static (Cloudflare Pages), so the sheet must be readable (Anyone with link → Viewer) for client-side fetch to work.
