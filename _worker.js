@@ -114,7 +114,7 @@ export default {
 
       // Only handle our API route; let everything else pass through.
       if (!path.startsWith("/api/overview")){
-        return fetch(request);
+        return env.ASSETS.fetch(request);
       }
 
       const project = (url.searchParams.get("project") || "").trim();
@@ -122,10 +122,13 @@ export default {
         return jsonResponse({ ok:false, error:"Missing project" }, 400);
       }
 
-      // Load playlists config from the same origin.
-      const origin = url.origin;
-      const cfgUrl = origin + "/assets/playlists.json?v=1";
-      const cfg = await fetchJson(cfgUrl);
+      // Load playlists config from Pages static assets WITHOUT recursion.
+      const cfgUrl = new URL("/assets/playlists.json", request.url);
+      const cfgResp = await env.ASSETS.fetch(new Request(cfgUrl.toString(), { method:"GET" }));
+      if (!cfgResp || !cfgResp.ok) {
+        return jsonResponse({ ok:false, error:"Failed to load /assets/playlists.json", status: cfgResp && cfgResp.status }, 500);
+      }
+      const cfg = await cfgResp.json();
 
       const projects = (cfg && cfg.projects) || {};
       const globalsPlaylistId = cfg && cfg.globalsPlaylistId;
