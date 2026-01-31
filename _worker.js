@@ -108,6 +108,42 @@ async function fetchPlaylistVideoMeta(listId, limit = 24) {
   return { ids, titles };
 }
 
+
+async function fetchOembedTitle(videoId) {
+  const url = "https://www.youtube.com/oembed?format=json&url=" + encodeURIComponent("https://www.youtube.com/watch?v=" + videoId);
+  const res = await fetch(url, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (compatible; TMS-STEM-Launchpad/1.0; +https://pages.dev/)",
+      "Accept": "application/json"
+    }
+  });
+  if (!res.ok) return "";
+  try {
+    const data = await res.json();
+    return (data && data.title) ? String(data.title) : "";
+  } catch (e) {
+    return "";
+  }
+}
+
+// Simple concurrency-limited async pool
+async function asyncPool(limit, arr, iteratorFn) {
+  const ret = [];
+  const executing = [];
+  for (const item of arr) {
+    const p = Promise.resolve().then(() => iteratorFn(item));
+    ret.push(p);
+    if (limit <= arr.length) {
+      const e = p.then(() => executing.splice(executing.indexOf(e), 1));
+      executing.push(e);
+      if (executing.length >= limit) {
+        await Promise.race(executing);
+      }
+    }
+  }
+  return Promise.all(ret);
+}
+
 async function handleOverview(url, env) {
   const project = (url.searchParams.get("project") || "").trim();
   if (!project) {
@@ -151,6 +187,16 @@ async function handleOverview(url, env) {
       if (ids.length >= 12) break;
     }
     if (ids.length >= 12) break;
+  }
+
+
+  // Fill any missing titles via YouTube oEmbed (no API key required)
+  const missing = ids.filter(id => !titlesById[id]);
+  if (missing.length) {
+    await asyncPool(6, missing.slice(0, 24), async (id) => {
+      const t = await fetchOembedTitle(id);
+      if (t) titlesById[id] = t;
+    });
   }
 
   // Build overviewMedia
