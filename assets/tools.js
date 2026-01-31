@@ -61,6 +61,11 @@
   // Registry (edit here)
   // ----------------------------
   const TOOLS = [
+    // Optional fields for installed apps (set later in the classroom):
+    // - launch: "web" | "app" | "hybrid" (default: web)
+    // - appUrl: custom protocol or local handler (ex: "ms-word:" or "zoommtg://...")
+    // - fallbackUrl: website to open if the app is not installed
+
     // Digital Art — Core
     { id:"canva", title:"Canva", badge:"Core", url:"https://www.canva.com/",
       desc:"Fast posters, slides, logos, and templates. Great for quick wins.",
@@ -120,8 +125,55 @@
   function qs(sel){ return document.querySelector(sel); }
   function el(tag, cls){ const n=document.createElement(tag); if(cls) n.className=cls; return n; }
 
+
+  // Open behavior (web / installed app / hybrid)
+  // t.launch can be: "web" (default), "app", or "hybrid".
+  // - web: opens t.url in a new tab
+  // - app: attempts t.appUrl (custom protocol). If it doesn't succeed, shows a gentle fallback to t.fallbackUrl or t.url.
+  // - hybrid: attempts t.appUrl first, then falls back to web.
+  function openTool_(t){
+    const launch = (t && t.launch) ? String(t.launch).toLowerCase() : "web";
+    const webUrl = (t && (t.url || t.fallbackUrl)) ? (t.fallbackUrl || t.url) : "";
+    const appUrl = (t && t.appUrl) ? String(t.appUrl) : "";
+
+    // Default: web
+    if(launch === "web" || !appUrl){
+      if(webUrl) window.open(webUrl, "_blank", "noopener,noreferrer");
+      return;
+    }
+
+    // Attempt app launch (works only if the device is configured to handle the protocol)
+    // Use a timed fallback that cancels if the page becomes hidden (app switch).
+    let didHide = false;
+    const onHide = ()=>{ didHide = true; };
+    document.addEventListener('visibilitychange', onHide, { once:true });
+
+    // Try opening the protocol in the current tab (most reliable for protocol handlers)
+    try{ window.location.href = appUrl; }catch(e){}
+
+    // Fallback to web if the app didn't take focus
+    const fallbackDelayMs = 900;
+    window.setTimeout(()=>{
+      try{ document.removeEventListener('visibilitychange', onHide); }catch(e){}
+      if(didHide) return;
+      if(webUrl) window.open(webUrl, "_blank", "noopener,noreferrer");
+    }, fallbackDelayMs);
+  }
+
   function renderToolCard(t){
     const card = el("div","toolCard");
+
+    // Make the whole card clickable (teacher-friendly UX)
+    card.tabIndex = 0;
+    card.setAttribute("role","link");
+    card.setAttribute("aria-label", `Open ${t.title}`);
+    card.addEventListener("click", ()=> openTool_(t));
+    card.addEventListener("keydown", (e)=>{
+      if(e.key === "Enter" || e.key === " "){
+        e.preventDefault();
+        openTool_(t);
+      }
+    });
 
     const head = el("div","toolHead");
     const left = el("div","toolLeft");
@@ -154,12 +206,15 @@
     const btn = el("button","openBtn");
     btn.type="button";
     btn.textContent="Open";
-    btn.addEventListener("click", ()=>{
-      window.open(t.url, "_blank", "noopener,noreferrer");
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      openTool_(t);
     });
 
     const note = el("div","smallNote");
-    note.textContent = "Opens in new tab";
+    note.textContent = (t && (String(t.launch||"web").toLowerCase() !== "web") && t.appUrl)
+      ? "Tries installed app, then opens web"
+      : "Opens in new tab";
 
     actions.appendChild(btn);
     actions.appendChild(note);
@@ -238,7 +293,7 @@
         </div>
       </div>
       <div class="toolControlsHint">
-        <b>${escapeHtml(projectName||"Project")}</b> • High confidence = links from the old website. New additions start at medium/low.
+        <b>${escapeHtml(projectName||"Project")}</b> • High confidence = links from the old website. New additions start at medium/low. Tip: click anywhere on a tool card to open it (the Open button works too).
       </div>
     `;
 
@@ -260,6 +315,19 @@
 
   function renderResourceCard_(r){
     const card = el("div","toolCard");
+
+    // Entire card is clickable (resources)
+    card.setAttribute("role","link");
+    card.tabIndex = 0;
+    card.setAttribute("aria-label", `Open ${r.title || 'resource'}`);
+    const openResource = ()=> window.open(r.url, "_blank", "noopener,noreferrer");
+    card.addEventListener("click", (e)=>{
+      if(e.target && (e.target.closest && e.target.closest('button'))) return;
+      openResource();
+    });
+    card.addEventListener("keydown", (e)=>{
+      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openResource(); }
+    });
 
     const head = el("div","toolHead");
     const left = el("div","toolLeft");
@@ -305,7 +373,10 @@
     const btn = el("button","openBtn");
     btn.type="button";
     btn.textContent="Open";
-    btn.addEventListener("click", ()=> window.open(r.url, "_blank", "noopener,noreferrer"));
+    btn.addEventListener("click", (e)=>{
+      e.stopPropagation();
+      window.open(r.url, "_blank", "noopener,noreferrer");
+    });
 
     const note = el("div","smallNote");
     note.textContent = "Opens in new tab";
