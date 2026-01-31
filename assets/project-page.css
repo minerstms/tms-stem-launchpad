@@ -88,3 +88,13 @@
   outline:3px solid rgba(79,134,198,.8);
   outline-offset:6px;
 }
+
+
+/* === Project title scale tweak (to align left/right card bottoms) === */
+.daTop .projTitle{ font-size:64px; line-height:1.02; }
+@media (max-width: 720px){ .daTop .projTitle{ font-size:46px; } }
+
+/* Place Ask card under Gimkit card (right column) on desktop */
+@media (min-width: 981px){
+  .daTop .heroGrid > .askGeppettoCard{ grid-column:2; }
+}

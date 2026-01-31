@@ -169,36 +169,50 @@ function assetUrl(path){
   // Typography: reuses .gimkitTitle so it matches "Gimkit!" exactly.
   // ============================================================
   function ensureAskGeppettoBtn(){
-    // Add exactly ONE Ask Geppetto! button per Gimkit card.
-    // Rule: do NOT move any existing headings/text. Only ADD the button.
-    var scrollers = document.querySelectorAll(".gimkitScroller");
-    if (!scrollers || !scrollers.length) return;
+    // Create ONE shared Ask card (outside the Gimkit card) per page.
+    var card = document.querySelector(".gimkitCard");
+    if (!card) return;
 
-    for (var i=0;i<scrollers.length;i++){
-      var sc = scrollers[i];
-      var card = sc.closest ? sc.closest(".gimkitCard") : null;
-      card = card || sc.parentNode || sc;
+    // If already created, bail.
+    if (document.querySelector(".askGeppettoCard")) return;
 
-      // Already added for this card? Stop.
-      if (card.querySelector && card.querySelector(".askGeppettoBtn")) continue;
+    // Build wrapper card (matches site card chrome)
+    var askCard = document.createElement("div");
+    askCard.className = "askGeppettoCard";
+    askCard.setAttribute("aria-label", "Ask Geppetto");
 
-      var btn = document.createElement("button");
-      btn.type = "button";
-      btn.className = "askGeppettoBtn askGeppettoImgBtn";
-      btn.setAttribute("aria-label", "Ask Geppetto!");
+    var inner = document.createElement("div");
+    inner.className = "askGeppettoInner";
+    askCard.appendChild(inner);
 
-      // Use a graphic button image (transparent background) so it stands out.
-      var img = document.createElement("img");
-      img.className = "askGeppettoImg";
-      img.src = "assets/ask-geppetto-button.png";
-      img.alt = "Ask Geppetto!";
-      btn.appendChild(img);
+    var btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "askGeppettoBtn";
+    btn.setAttribute("aria-label", "Ask Geppetto");
 
-      // Append BELOW the Gimkit scroller, but keep the button inside the same
-      // width-constrained inner wrapper so it lines up perfectly with the
-      // "20 Questions..." panel above.
-      var inner = (card.querySelector ? card.querySelector(".gimkitInner") : null) || sc.parentNode || card;
-      inner.appendChild(btn);
+    // NOTE: We keep the button itself as the clickable hitbox; the card simply frames it.
+    btn.addEventListener("click", function(){
+      // Placeholder action for now; wire to your bot when ready.
+      // For now, we just open the "Ask" target if it exists.
+      try{
+        var url = window.ASK_GEPETTO_URL || "";
+        if (url) window.open(url, "_blank", "noopener");
+      }catch(e){}
+    });
+
+    var img = document.createElement("img");
+    img.alt = "Ask Geppetto!";
+    img.src = "assets/ask-geppetto-button.png?v=1";
+    img.className = "askGeppettoImg";
+    btn.appendChild(img);
+
+    inner.appendChild(btn);
+
+    // Insert the Ask card directly AFTER the Gimkit card (same column),
+    // so it is visually its own entity (not part of Gimkit).
+    var parent = card.parentNode;
+    if (parent){
+      parent.insertBefore(askCard, card.nextSibling);
     }
   }
 
