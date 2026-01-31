@@ -98,3 +98,58 @@
 @media (min-width: 981px){
   .daTop .heroGrid > .askGeppettoCard{ grid-column:2; }
 }
+
+/* ============================================================
+   ASK GEPPETTO — Graphic button + layout stability
+   ============================================================ */
+
+/* The JS wraps Gimkit + Ask into a vertical stack. Ensure it can shrink.
+   Without min-width:0, the large button image can force the whole right
+   column wider after JS runs ("flash" symptom you described). */
+.gimkitStack{ 
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-width:0;
+}
+
+/* Grid items must be allowed to shrink below their content width */
+.heroGrid > *,
+.projectTopGrid > *,
+.topTwoCol > *{
+  min-width:0;
+}
+
+/* Make sure grid items can shrink inside CSS Grid/Flex contexts */
+.daTop .heroGrid > *{ min-width:0; }
+
+/* Ask Geppetto card */
+.askGeppettoCard{
+  margin-top:12px;
+  border-radius:18px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.12);
+  box-shadow:0 10px 30px rgba(0,0,0,.35);
+  overflow:hidden;
+}
+
+.askGeppettoBtn{
+  display:block;
+  width:100%;
+  padding:12px;
+  background:transparent;
+  border:0;
+  cursor:pointer;
+}
+
+/* CRITICAL: prevent the image from widening the column */
+.askGeppettoImg{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+}
+
+/* Tighten spacing below Gimkit to reduce the "dead zone" */
+.gimkitStack .gimkitCard{ margin-bottom:10px; }
+
