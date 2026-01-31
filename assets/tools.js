@@ -1,6 +1,6 @@
 // TMS STEM Launchpad — Tools Registry + Project Page Renderer
 // Designed to be shared by ALL project pages.
-// Each project page sets: <body data-project="digital-art"> (or other key)
+// Each project page sets: <body data-project="project-01"> (or other key)
 
 (function(){
   // ----------------------------
@@ -65,48 +65,48 @@
     { id:"canva", title:"Canva", badge:"Core", url:"https://www.canva.com/",
       desc:"Fast posters, slides, logos, and templates. Great for quick wins.",
       tags:["Templates","Poster","Logo","Drag & drop"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"adobe-express", title:"Adobe Express", badge:"Core", url:"https://www.adobe.com/express/",
       desc:"Design + video + quick edits. Nice presets and easy exports.",
       tags:["Poster","Flyer","Video"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"photopea", title:"Photopea", badge:"Photo editor", url:"https://www.photopea.com/",
       desc:"Photoshop-style editor in a browser. Layers, cutouts, text, effects.",
       tags:["Layers","Cutout","PNG"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"pixlr", title:"Pixlr", badge:"Photo editor", url:"https://pixlr.com/",
       desc:"Simple photo editing, filters, backgrounds, and quick adjustments.",
       tags:["Filters","Retouch","Background"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"google-drawings", title:"Google Drawings", badge:"School-safe", url:"https://docs.google.com/drawings/",
       desc:"Super reliable for diagrams, icons, labels, and quick designs.",
       tags:["Shapes","Diagram","Export PNG"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     // Digital Art — Support tools
     { id:"coolors", title:"Coolors Color Palette", badge:"Colors", url:"https://coolors.co/",
       desc:"Generate awesome color palettes and copy hex codes.",
       tags:["Palette","Hex","Color"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"removebg", title:"remove.bg", badge:"Cutout", url:"https://www.remove.bg/",
       desc:"Remove photo backgrounds quickly (use wisely; check privacy rules).",
       tags:["Background remove","PNG"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"fontpair", title:"FontPair", badge:"Fonts", url:"https://fontpair.co/",
       desc:"Pick font combinations that look professional.",
       tags:["Fonts","Typography"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
     { id:"nounproject", title:"The Noun Project", badge:"Icons", url:"https://thenounproject.com/",
       desc:"Find simple icons (always follow license rules).",
       tags:["Icons","Symbols"],
-      projects:["digital-art"]
+      projects:["project-01"]
     },
   ];
 
@@ -180,7 +180,7 @@
   // Project metadata (keys match <body data-project="...">)
   // ----------------------------
   const PROJECT_META = {
-    "digital-art": { name:"Digital Art", keywords:["digital-art","design","digital","ai","photo-editing","creative-coding"] },
+    "project-01": { name:"Digital Art", keywords:["digital-art","design","digital","ai","photo-editing","creative-coding"] },
     "project-02": { name:"Photography", keywords:["photography","photo-editing","camera","composition","digital-art"] },
     "project-03": { name:"Music Production", keywords:["music-production","audio","tts","sound","beats"] },
     "project-04": { name:"Language & Website Design", keywords:["website-design","writing","web","coding","language"] },
