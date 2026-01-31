@@ -160,7 +160,7 @@ async function handleOverview(url, env) {
   const projCfg = (cfg.projects && cfg.projects[project]) ? cfg.projects[project] : null;
   const playlistIds = projCfg && Array.isArray(projCfg.playlistIds) ? projCfg.playlistIds.slice() : [];
 
-  // Always include globals playlist first (if provided)
+  // Include globals playlist (appended last so global videos appear at right end)
   const globals = cfg.globalsPlaylistId ? [cfg.globalsPlaylistId] : [];
 
   // Always pin mustVideos to the very front
@@ -173,8 +173,8 @@ async function handleOverview(url, env) {
   // 1) Must videos first
   for (const v of must) uniqPush(ids, seen, String(v));
 
-  // 2) Globals playlist, then project playlists
-  const playlistOrder = globals.concat(playlistIds);
+  // 2) Project playlists, then globals playlist (globals render last)
+  const playlistOrder = playlistIds.concat(globals);
 
   // Pull in playlist videos until we have enough
   for (const listId of playlistOrder) {
