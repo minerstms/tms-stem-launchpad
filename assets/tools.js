@@ -1,6 +1,6 @@
 // TMS STEM Launchpad — Tools Registry + Project Page Renderer
 // Designed to be shared by ALL project pages.
-// Each project page sets: <body data-project="project-01"> (or other key)
+// Each project page sets: <body data-project="digital-art"> (or other key)
 
 (function(){
   // ----------------------------
@@ -61,57 +61,52 @@
   // Registry (edit here)
   // ----------------------------
   const TOOLS = [
-    // Optional fields for installed apps (set later in the classroom):
-    // - launch: "web" | "app" | "hybrid" (default: web)
-    // - appUrl: custom protocol or local handler (ex: "ms-word:" or "zoommtg://...")
-    // - fallbackUrl: website to open if the app is not installed
-
     // Digital Art — Core
     { id:"canva", title:"Canva", badge:"Core", url:"https://www.canva.com/",
       desc:"Fast posters, slides, logos, and templates. Great for quick wins.",
       tags:["Templates","Poster","Logo","Drag & drop"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"adobe-express", title:"Adobe Express", badge:"Core", url:"https://www.adobe.com/express/",
       desc:"Design + video + quick edits. Nice presets and easy exports.",
       tags:["Poster","Flyer","Video"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"photopea", title:"Photopea", badge:"Photo editor", url:"https://www.photopea.com/",
       desc:"Photoshop-style editor in a browser. Layers, cutouts, text, effects.",
       tags:["Layers","Cutout","PNG"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"pixlr", title:"Pixlr", badge:"Photo editor", url:"https://pixlr.com/",
       desc:"Simple photo editing, filters, backgrounds, and quick adjustments.",
       tags:["Filters","Retouch","Background"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"google-drawings", title:"Google Drawings", badge:"School-safe", url:"https://docs.google.com/drawings/",
       desc:"Super reliable for diagrams, icons, labels, and quick designs.",
       tags:["Shapes","Diagram","Export PNG"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     // Digital Art — Support tools
     { id:"coolors", title:"Coolors Color Palette", badge:"Colors", url:"https://coolors.co/",
       desc:"Generate awesome color palettes and copy hex codes.",
       tags:["Palette","Hex","Color"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"removebg", title:"remove.bg", badge:"Cutout", url:"https://www.remove.bg/",
       desc:"Remove photo backgrounds quickly (use wisely; check privacy rules).",
       tags:["Background remove","PNG"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"fontpair", title:"FontPair", badge:"Fonts", url:"https://fontpair.co/",
       desc:"Pick font combinations that look professional.",
       tags:["Fonts","Typography"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
     { id:"nounproject", title:"The Noun Project", badge:"Icons", url:"https://thenounproject.com/",
       desc:"Find simple icons (always follow license rules).",
       tags:["Icons","Symbols"],
-      projects:["project-01"]
+      projects:["digital-art"]
     },
   ];
 
@@ -125,55 +120,8 @@
   function qs(sel){ return document.querySelector(sel); }
   function el(tag, cls){ const n=document.createElement(tag); if(cls) n.className=cls; return n; }
 
-
-  // Open behavior (web / installed app / hybrid)
-  // t.launch can be: "web" (default), "app", or "hybrid".
-  // - web: opens t.url in a new tab
-  // - app: attempts t.appUrl (custom protocol). If it doesn't succeed, shows a gentle fallback to t.fallbackUrl or t.url.
-  // - hybrid: attempts t.appUrl first, then falls back to web.
-  function openTool_(t){
-    const launch = (t && t.launch) ? String(t.launch).toLowerCase() : "web";
-    const webUrl = (t && (t.url || t.fallbackUrl)) ? (t.fallbackUrl || t.url) : "";
-    const appUrl = (t && t.appUrl) ? String(t.appUrl) : "";
-
-    // Default: web
-    if(launch === "web" || !appUrl){
-      if(webUrl) window.open(webUrl, "_blank", "noopener,noreferrer");
-      return;
-    }
-
-    // Attempt app launch (works only if the device is configured to handle the protocol)
-    // Use a timed fallback that cancels if the page becomes hidden (app switch).
-    let didHide = false;
-    const onHide = ()=>{ didHide = true; };
-    document.addEventListener('visibilitychange', onHide, { once:true });
-
-    // Try opening the protocol in the current tab (most reliable for protocol handlers)
-    try{ window.location.href = appUrl; }catch(e){}
-
-    // Fallback to web if the app didn't take focus
-    const fallbackDelayMs = 900;
-    window.setTimeout(()=>{
-      try{ document.removeEventListener('visibilitychange', onHide); }catch(e){}
-      if(didHide) return;
-      if(webUrl) window.open(webUrl, "_blank", "noopener,noreferrer");
-    }, fallbackDelayMs);
-  }
-
   function renderToolCard(t){
     const card = el("div","toolCard");
-
-    // Make the whole card clickable (teacher-friendly UX)
-    card.tabIndex = 0;
-    card.setAttribute("role","link");
-    card.setAttribute("aria-label", `Open ${t.title}`);
-    card.addEventListener("click", ()=> openTool_(t));
-    card.addEventListener("keydown", (e)=>{
-      if(e.key === "Enter" || e.key === " "){
-        e.preventDefault();
-        openTool_(t);
-      }
-    });
 
     const head = el("div","toolHead");
     const left = el("div","toolLeft");
@@ -206,15 +154,12 @@
     const btn = el("button","openBtn");
     btn.type="button";
     btn.textContent="Open";
-    btn.addEventListener("click", (e)=>{
-      e.stopPropagation();
-      openTool_(t);
+    btn.addEventListener("click", ()=>{
+      window.open(t.url, "_blank", "noopener,noreferrer");
     });
 
     const note = el("div","smallNote");
-    note.textContent = (t && (String(t.launch||"web").toLowerCase() !== "web") && t.appUrl)
-      ? "Tries installed app, then opens web"
-      : "Opens in new tab";
+    note.textContent = "Opens in new tab";
 
     actions.appendChild(btn);
     actions.appendChild(note);
@@ -235,7 +180,7 @@
   // Project metadata (keys match <body data-project="...">)
   // ----------------------------
   const PROJECT_META = {
-    "project-01": { name:"Digital Art", keywords:["digital-art","design","digital","ai","photo-editing","creative-coding"] },
+    "digital-art": { name:"Digital Art", keywords:["digital-art","design","digital","ai","photo-editing","creative-coding"] },
     "project-02": { name:"Photography", keywords:["photography","photo-editing","camera","composition","digital-art"] },
     "project-03": { name:"Music Production", keywords:["music-production","audio","tts","sound","beats"] },
     "project-04": { name:"Language & Website Design", keywords:["website-design","writing","web","coding","language"] },
@@ -293,7 +238,7 @@
         </div>
       </div>
       <div class="toolControlsHint">
-        <b>${escapeHtml(projectName||"Project")}</b> • High confidence = links from the old website. New additions start at medium/low. Tip: click anywhere on a tool card to open it (the Open button works too).
+        <b>${escapeHtml(projectName||"Project")}</b> • High confidence = links from the old website. New additions start at medium/low.
       </div>
     `;
 
@@ -315,19 +260,6 @@
 
   function renderResourceCard_(r){
     const card = el("div","toolCard");
-
-    // Entire card is clickable (resources)
-    card.setAttribute("role","link");
-    card.tabIndex = 0;
-    card.setAttribute("aria-label", `Open ${r.title || 'resource'}`);
-    const openResource = ()=> window.open(r.url, "_blank", "noopener,noreferrer");
-    card.addEventListener("click", (e)=>{
-      if(e.target && (e.target.closest && e.target.closest('button'))) return;
-      openResource();
-    });
-    card.addEventListener("keydown", (e)=>{
-      if(e.key === 'Enter' || e.key === ' '){ e.preventDefault(); openResource(); }
-    });
 
     const head = el("div","toolHead");
     const left = el("div","toolLeft");
@@ -373,10 +305,7 @@
     const btn = el("button","openBtn");
     btn.type="button";
     btn.textContent="Open";
-    btn.addEventListener("click", (e)=>{
-      e.stopPropagation();
-      window.open(r.url, "_blank", "noopener,noreferrer");
-    });
+    btn.addEventListener("click", ()=> window.open(r.url, "_blank", "noopener,noreferrer"));
 
     const note = el("div","smallNote");
     note.textContent = "Opens in new tab";

@@ -1,5 +1,6 @@
 /* ===================== assets/style.css (TOP) ===================== */
 :root{
+  --marqueeH:44px;
   --navy:#000080;
   --columbia:#4F86C6;
   --white:#ffffff;
@@ -17,7 +18,7 @@ html,body{height:100%}
 /* --- Corner mascot (upper-right) --- */
 .mascotCorner{
   position:fixed;
-  top:12px;
+  top:calc(var(--marqueeH) + 12px);
   right:12px;
   z-index:50;
   width:clamp(52px, 7vw, 96px);
@@ -212,8 +213,15 @@ a{color:inherit;text-decoration:none}
   padding:14px 14px 12px;
   box-shadow:0 10px 24px rgba(0,0,0,.18);
   transition:transform .10s ease, box-shadow .2s ease, border-color .2s ease;
+  text-decoration:none;
+  -webkit-tap-highlight-color: transparent;
 }
+
 .card:hover{transform:translateY(-2px);border-color:rgba(79,134,198,.45)}
+.card:focus{outline:none;}
+.card:focus-visible{outline:none;border-color:rgba(79,134,198,.75);box-shadow:0 0 0 4px rgba(79,134,198,.55), 0 10px 24px rgba(0,0,0,.18);}
+@media (hover:none){.card:hover{transform:none;}}
+
 .kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:18px}
 .kicker span:first-child{
   font-weight:750;
@@ -254,7 +262,7 @@ a{color:inherit;text-decoration:none}
 .pageSub{color:var(--muted);font-size:13px;font-weight:700}
 .backLink{display:inline-block;margin:10px 0 14px;font-weight:900;color:rgba(255,255,255,.9)}
 .toolsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.toolCard{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.05);padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .10s ease, box-shadow .2s ease;cursor:pointer}
+.toolCard{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.05);padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .10s ease, box-shadow .2s ease}
 .toolCard:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(0,0,0,.22)}
 .toolHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .toolLeft{display:flex;align-items:center;gap:10px;min-width:0}
@@ -586,4 +594,7 @@ a{color:inherit;text-decoration:none}
   scrollbar-width: auto;
 }
 
-.toolCard:focus-visible{outline:2px solid rgba(255,255,255,.55);outline-offset:2px}
+
+/* --- Gimkit requirement note (two lines, centered) --- */
+.gimkitReq{margin-top:12px;text-align:center;font-weight:800;color:rgba(255,255,255,.78);font-size:13px;line-height:1.25;}
+.gimkitReq span{display:block;}
