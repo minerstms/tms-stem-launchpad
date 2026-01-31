@@ -56,8 +56,8 @@ a{color:inherit;text-decoration:none}
 .brand{display:flex;flex-direction:column;gap:2px;align-items:flex-start}
 /* Brand */
 .brand .title{display:none}
-.brandLogo{display:block;height:auto;width:min(560px,78vw);max-width:560px;filter:drop-shadow(0 0 14px rgba(79,134,198,.55));}
- (max-width:520px){.brandLogo{width:min(420px,86vw);max-width:420px;}}
+.brandLogo{display:block;height:auto;width:min(560px,78vw);max-width:560px;filter:drop-shadow(0 0 14px rgba(79,134,198,.55));margin:0;}
+@media (max-width:520px){.brandLogo{width:min(420px,86vw);max-width:420px;}}
 .brand .subtitle{display:none}
 
 .searchRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
@@ -598,4 +598,3 @@ a{color:inherit;text-decoration:none}
   .home .container{padding-top:2px;}
   .home .topbar{padding:2px 0 4px;}
 }
-
