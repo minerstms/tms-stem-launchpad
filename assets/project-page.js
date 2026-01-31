@@ -203,6 +203,7 @@ function assetUrl(path){
   async function init(){
     ensureCss();
     var key = getProjectKey();
+    var __overviewLoadedFromApi = false;
 
     // Gimkit (data-driven) — reads assets/gimkit.json and renders ONLY if a join URL exists.
       try{
@@ -268,6 +269,7 @@ function assetUrl(path){
         var wdata = await wres.json();
         if (wdata && wdata.overviewMedia && wdata.overviewMedia.length){
           applyThumbRow(wdata.overviewMedia);
+          __overviewLoadedFromApi = true;
           // NOTE: curated/inspiration remain supported via legacy JSON if you still use them.
         }
       }
@@ -288,7 +290,8 @@ function assetUrl(path){
         var proj = cfg && cfg[key];
         // Project-level
         if (proj){
-          if (proj.overviewMedia) applyThumbRow(proj.overviewMedia);
+          // IMPORTANT: Do NOT overwrite the API-driven Overview scroller if it already loaded.
+          if (!__overviewLoadedFromApi && proj.overviewMedia) applyThumbRow(proj.overviewMedia);
           if (proj.curated) applyCurated(proj.curated);
           if (proj.inspiration) applyInspiration(proj.inspiration);
         }
@@ -296,7 +299,7 @@ function assetUrl(path){
         // Optional global fallbacks
         var glob = cfg && cfg["_GLOBAL"];
         if (glob){
-          if (glob.overviewMedia) applyThumbRow(glob.overviewMedia);
+          if (!__overviewLoadedFromApi && glob.overviewMedia) applyThumbRow(glob.overviewMedia);
           if (glob.curated) applyCurated(glob.curated);
           if (glob.inspiration) applyInspiration(glob.inspiration);
         }

@@ -87,33 +87,54 @@ async function build(projectKey, cfg, apiKey) {
     ids.push(id);
   }
 
-  // Playlist tiles (playlist thumbnails + title)
-  const playlistTiles = [];
-  if (ids.length) {
-    const meta = await yt("/playlists", { part: "snippet,contentDetails", id: ids.join(","), maxResults: 50 }, apiKey);
-    const byId = new Map();
-    (meta.items || []).forEach(it => byId.set(it.id, it));
+  // Project playlists expanded into VIDEO tiles.
+  // Goal: the Overview scroller should show actual tutorial videos (not just playlist links).
+  // Limits: fetch only first page per playlist (maxResults=25) and cap total to keep it fast.
+  const projectVideoTiles = [];
+  const MAX_PER_PLAYLIST = 12;
+  const MAX_TOTAL = 30;
 
-    for (const id of ids) {
-      const it = byId.get(id);
-      if (!it || !it.snippet) continue;
-      playlistTiles.push({
-        kind: "playlist",
-        href: `https://www.youtube.com/playlist?list=${id}`,
-        src: bestThumb(it.snippet.thumbnails) || "/assets/youtube-thumb.svg",
-        label: cleanLabel(it.snippet.title)
-      });
+  let projectPriority = 1200;
+  for (const pid of ids) {
+    if (projectVideoTiles.length >= MAX_TOTAL) break;
+    try {
+      const data = await yt(
+        "/playlistItems",
+        { part: "snippet,contentDetails", playlistId: pid, maxResults: MAX_PER_PLAYLIST },
+        apiKey
+      );
+
+      for (const it of (data.items || [])) {
+        if (projectVideoTiles.length >= MAX_TOTAL) break;
+        const vid =
+          (it && it.contentDetails && it.contentDetails.videoId) ||
+          (it && it.snippet && it.snippet.resourceId && it.snippet.resourceId.videoId);
+        if (!vid) continue;
+
+        projectVideoTiles.push({
+          kind: "video",
+          href: `https://youtu.be/${vid}`,
+          src: bestThumb(it.snippet && it.snippet.thumbnails) || `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`,
+          label: cleanLabel(it && it.snippet ? it.snippet.title : ""),
+          priority: projectPriority--
+        });
+      }
+    } catch (e) {
+      // If one playlist fails, continue with the rest.
     }
   }
 
   // Must-have video tiles (optional) — uses video IDs only
   const must = (cfg && cfg.mustVideos && cfg.mustVideos[projectKey]) ? cfg.mustVideos[projectKey] : [];
   const mustIds = Array.isArray(must) ? must.filter(Boolean) : [];
+  let mustPriority = 2200;
   const mustTiles = mustIds.map(vid => ({
     kind: "video",
     href: `https://youtu.be/${vid}`,
     src: `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`,
-    label: ""
+    label: "",
+    pinned: true,
+    priority: mustPriority--
   }));
 
   // Globals playlist expanded as videos appended RIGHT-MOST
@@ -121,6 +142,7 @@ async function build(projectKey, cfg, apiKey) {
   const globalTiles = [];
   if (globalsId) {
     let pageToken = "";
+    let globalPriority = 200;
     for (let guard = 0; guard < 5; guard++) {
       const data = await yt("/playlistItems", { part: "snippet,contentDetails", playlistId: globalsId, maxResults: 50, pageToken }, apiKey);
       for (const it of (data.items || [])) {
@@ -133,7 +155,8 @@ async function build(projectKey, cfg, apiKey) {
           kind: "video",
           href: `https://youtu.be/${vid}`,
           src: bestThumb(it.snippet && it.snippet.thumbnails) || `https://i.ytimg.com/vi/${vid}/hqdefault.jpg`,
-          label: cleanLabel(it && it.snippet ? it.snippet.title : "")
+          label: cleanLabel(it && it.snippet ? it.snippet.title : ""),
+          priority: globalPriority--
         });
       }
       pageToken = data.nextPageToken || "";
@@ -141,7 +164,7 @@ async function build(projectKey, cfg, apiKey) {
     }
   }
 
-  return { overviewMedia: [...playlistTiles, ...mustTiles, ...globalTiles] };
+  return { overviewMedia: [...projectVideoTiles, ...mustTiles, ...globalTiles] };
 }
 
 function normalizeProjectKey(q) {
