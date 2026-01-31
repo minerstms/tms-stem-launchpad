@@ -264,16 +264,23 @@ function assetUrl(path){
     // Must never break the page if missing.
     // ============================================================
     try{
+      // Always call applyThumbRow() so any baked-in tiles are cleared and
+      // a placeholder is shown when the playlist has no items yet.
       var wres = await fetch("/api/overview?project=" + encodeURIComponent(key), {cache:"no-store"});
       if (wres && wres.ok){
         var wdata = await wres.json();
-        if (wdata && wdata.overviewMedia && wdata.overviewMedia.length){
-          applyThumbRow(wdata.overviewMedia);
-          __overviewLoadedFromApi = true;
-          // NOTE: curated/inspiration remain supported via legacy JSON if you still use them.
-        }
+        var list = (wdata && Array.isArray(wdata.overviewMedia)) ? wdata.overviewMedia : [];
+        applyThumbRow(list);
+        __overviewLoadedFromApi = true;
+      } else {
+        applyThumbRow([]);
+        __overviewLoadedFromApi = true;
       }
-    }catch(e){ /* silent */ }
+    }catch(e){
+      applyThumbRow([]);
+      __overviewLoadedFromApi = true;
+    }
+
 
     // ============================================================
     // Overview / curated / inspiration (LEGACY: media-links.json)
