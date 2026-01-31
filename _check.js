@@ -238,8 +238,16 @@ function assetUrl(path){
     // Ensure the left Overview card can "push" its scroller down to match the right stack height.
     // We do this by inserting a flex spacer above the Overview scroller (idempotent).
     try {
-      // Overview scroller positioning handled via CSS (flex + margin-top:auto)
-catch (e) {}
+      var heroInner = document.querySelector('.heroCard .heroInner');
+      if (heroInner && !heroInner.querySelector('.overviewSpacer')) {
+        var scroller = heroInner.querySelector('.overviewScroller');
+        if (scroller) {
+          var oSpacer = document.createElement('div');
+          oSpacer.className = 'overviewSpacer';
+          heroInner.insertBefore(oSpacer, scroller);
+        }
+      }
+    } catch (e) {}
   }
 
   // Add on load, and again after dynamic renders (safe + idempotent)., and again after dynamic renders (safe + idempotent).

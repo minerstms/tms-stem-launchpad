@@ -106,7 +106,7 @@
 /* The JS wraps Gimkit + Ask into a vertical stack. Ensure it can shrink.
    Without min-width:0, the large button image can force the whole right
    column wider after JS runs ("flash" symptom you described). */
-.gimkitStack{ 
+.gimkitAskStack{ 
   display:flex;
   flex-direction:column;
   height:100%;
@@ -151,5 +151,70 @@
 }
 
 /* Tighten spacing below Gimkit to reduce the "dead zone" */
-.gimkitStack .gimkitCard{ margin-bottom:10px; }
+.gimkitAskStack .gimkitCard{ margin-bottom:10px; }
 
+
+/* =========================================================
+   Ask Geppetto + Hero layout (LOCKED STABLE WIDTH + ALIGN)
+   - Ensure Overview is the wider column
+   - Prevent image button from forcing column expansion
+   - Keep bottoms aligned without wasting space under scroller
+   ========================================================= */
+
+.daTop .sectionGrid{
+  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr) !important;
+  align-items: stretch !important;
+}
+
+/* Allow grid items to shrink (critical for Cloudflare + big images) */
+.daTop .sectionGrid > *{ min-width:0 !important; }
+
+/* Title: slightly larger/taller so left card can visually balance the right stack */
+.daTop .projectTitle{
+  font-size: clamp(34px, 4.2vw, 54px) !important;
+  line-height: 1.05 !important;
+  margin-bottom: 10px !important;
+}
+
+/* Make the Overview card a flex column and pin the scroller to the bottom */
+.daTop .heroCard .heroInner,
+.daTop .overviewCard .overviewInner{
+  display:flex !important;
+  flex-direction:column !important;
+  height:100% !important;
+  min-height:0 !important;
+}
+
+.daTop .overviewScroller{
+  margin-top:auto !important;   /* pushes scroller down */
+  margin-bottom:0 !important;
+}
+
+/* Stack (Gimkit + Ask Geppetto) */
+.gimkitAskStack{
+  display:flex;
+  flex-direction:column;
+  width:100%;
+  max-width:100%;
+  min-width:0;
+  gap:14px;
+}
+
+/* Make sure the image button NEVER expands the column */
+.askGeppettoLink{
+  display:block;
+  width:100%;
+  max-width:100%;
+}
+
+.askGeppettoLink img{
+  display:block;
+  width:100%;
+  max-width:100%;
+  height:auto;
+}
+
+/* Slightly reduce extra padding inside the Gimkit card so there isn't a dead zone */
+.gimkitAskStack .gimkitCard{
+  padding-bottom: 10px !important;
+}
