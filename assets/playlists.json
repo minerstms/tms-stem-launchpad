@@ -2,10 +2,19 @@
   "version": 1,
   "globalsPlaylistId": "PLIvHxxWt49qskxUGBvoyYEEpGd2fG_s9R",
   "mustVideos": {
-    "project-05": ["uut67cfOUD0"],
-    "project-12": ["AgHuEsR4JxY", "0JzHg4kL3zY"],
-    "project-14": ["aIIkKCDON_w"],
-    "project-15": ["lB_fyJ3HCZg"]
+    "project-05": [
+      "uut67cfOUD0"
+    ],
+    "project-12": [
+      "AgHuEsR4JxY",
+      "0JzHg4kL3zY"
+    ],
+    "project-14": [
+      "aIIkKCDON_w"
+    ],
+    "project-15": [
+      "lB_fyJ3HCZg"
+    ]
   },
   "projects": {
     "digital-art": {
@@ -92,6 +101,11 @@
     "project-15": {
       "playlistIds": [
         "PLIvHxxWt49qtwOXlaGww2P32coR4b2od7"
+      ]
+    },
+    "project-01": {
+      "playlistIds": [
+        "PLIvHxxWt49qvdxoI0nUS97hvAgEjjdes7"
       ]
     }
   }

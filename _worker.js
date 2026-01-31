@@ -173,22 +173,80 @@ async function handleOverview(url, env) {
   // 1) Must videos first
   for (const v of must) uniqPush(ids, seen, String(v));
 
-  // 2) Project playlists, then globals playlist (globals render last)
-  const playlistOrder = playlistIds.concat(globals);
+  // 2) Project playlists then globals (globals rightmost), with reserved room so globals appear.
+//    Order: must -> project-specific -> globals
+  const TOTAL_MAX = 12;
+  const mustSet = new Set(must);
 
-  // Pull in playlist videos until we have enough
-  for (const listId of playlistOrder) {
-    if (!listId) continue;
-    const meta = await fetchPlaylistVideoMeta(listId, 30);
-    const vids = meta.ids;
-    Object.assign(titlesById, meta.titles);
-    for (const vid of vids) {
-      uniqPush(ids, seen, vid);
-      if (ids.length >= 12) break;
+  // Collect project-specific ids (in order) + titles
+  const projectIds = [];
+  const globalIds  = [];
+
+  async function collectFromPlaylists(listIds, outArr) {
+    const localSeen = new Set(outArr);
+    for (const listId of listIds) {
+      if (!listId) continue;
+      const meta = await fetchPlaylistVideoMeta(listId, 30);
+      Object.assign(titlesById, meta.titles);
+      for (const vid of meta.ids) {
+        if (!vid) continue;
+        if (localSeen.has(vid)) continue;
+        localSeen.add(vid);
+        outArr.push(vid);
+      }
     }
-    if (ids.length >= 12) break;
   }
 
+  await collectFromPlaylists(playlistIds, projectIds);
+  await collectFromPlaylists(globals, globalIds);
+
+  // Build final ordered list with reservation for globals
+  const finalIds = [];
+  const finalSeen = new Set();
+
+  // Must first
+  for (const v of must) {
+    if (!v) continue;
+    if (finalSeen.has(v)) continue;
+    finalSeen.add(v);
+    finalIds.push(v);
+  }
+
+  const remaining = Math.max(0, TOTAL_MAX - finalIds.length);
+
+  // Reserve up to 3 slots for globals (but not more than remaining slots)
+  const reserveGlobals = Math.min(3, remaining);
+
+  // Take project vids up to remaining - reserveGlobals
+  const projCap = Math.max(0, remaining - reserveGlobals);
+  for (const v of projectIds) {
+    if (finalIds.length >= (TOTAL_MAX - reserveGlobals)) break;
+    if (finalSeen.has(v)) continue;
+    finalSeen.add(v);
+    finalIds.push(v);
+  }
+
+  // Now take globals (fill what's left; globals go at the end)
+  for (const v of globalIds) {
+    if (finalIds.length >= TOTAL_MAX) break;
+    if (finalSeen.has(v)) continue;
+    finalSeen.add(v);
+    finalIds.push(v);
+  }
+
+  // If globals were short and we still have room, top up with more project videos
+  if (finalIds.length < TOTAL_MAX) {
+    for (const v of projectIds) {
+      if (finalIds.length >= TOTAL_MAX) break;
+      if (finalSeen.has(v)) continue;
+      finalSeen.add(v);
+      finalIds.push(v);
+    }
+  }
+
+  // Commit final order
+  ids.length = 0;
+  for (const v of finalIds) ids.push(v);
 
   // Fill any missing titles via YouTube oEmbed (no API key required)
   const missing = ids.filter(id => !titlesById[id]);
