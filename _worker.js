@@ -55,8 +55,9 @@ function uniqPush(arr, set, v) {
   arr.push(v);
 }
 
-async function fetchPlaylistVideoIds(listId, limit = 24) {
-  const out = [];
+async function fetchPlaylistVideoMeta(listId, limit = 24) {
+  const ids = [];
+  const titles = Object.create(null);
   const seen = new Set();
   const url = "https://www.youtube.com/playlist?list=" + encodeURIComponent(listId) + "&hl=en";
 
@@ -67,23 +68,44 @@ async function fetchPlaylistVideoIds(listId, limit = 24) {
     }
   });
 
-  if (!res.ok) return out;
+  if (!res.ok) return { ids, titles };
 
   const html = await res.text();
 
-  // Scrape video IDs from embedded JSON in the playlist page.
-  // This avoids Atom XML fragility and works reliably on Pages.
-  const re = /"videoId":"([a-zA-Z0-9_-]{11})"/g;
+  // Scrape video IDs + nearby titles from embedded JSON in the playlist page.
+  // Regex pairs an id with the closest title text (works well enough for playlist pages).
+  const re = /"videoId":"([a-zA-Z0-9_-]{11})"[\s\S]{0,350}?"title":\{"runs":\[\{"text":"([^"]+)"/g;
   let m;
   while ((m = re.exec(html)) !== null) {
     const id = m[1];
-    if (!seen.has(id)) {
-      seen.add(id);
-      out.push(id);
-      if (out.length >= limit) break;
+    if (seen.has(id)) continue;
+
+    seen.add(id);
+    ids.push(id);
+
+    // Decode JSON-escaped text (e.g., \u0026) safely
+    const raw = m[2] || "";
+    let title = raw;
+    try { title = JSON.parse('"' + raw.replace(/"/g, '\\\"') + '"'); } catch (e) {}
+    titles[id] = title;
+
+    if (ids.length >= limit) break;
+  }
+
+  // Fallback: if we somehow got ids without titles, at least return ids
+  if (!ids.length) {
+    const re2 = /"videoId":"([a-zA-Z0-9_-]{11})"/g;
+    while ((m = re2.exec(html)) !== null) {
+      const id = m[1];
+      if (!seen.has(id)) {
+        seen.add(id);
+        ids.push(id);
+        if (ids.length >= limit) break;
+      }
     }
   }
-  return out;
+
+  return { ids, titles };
 }
 
 async function handleOverview(url, env) {
@@ -110,6 +132,7 @@ async function handleOverview(url, env) {
 
   const ids = [];
   const seen = new Set();
+  const titlesById = Object.create(null);
 
   // 1) Must videos first
   for (const v of must) uniqPush(ids, seen, String(v));
@@ -120,7 +143,9 @@ async function handleOverview(url, env) {
   // Pull in playlist videos until we have enough
   for (const listId of playlistOrder) {
     if (!listId) continue;
-    const vids = await fetchPlaylistVideoIds(listId, 30);
+    const meta = await fetchPlaylistVideoMeta(listId, 30);
+    const vids = meta.ids;
+    Object.assign(titlesById, meta.titles);
     for (const vid of vids) {
       uniqPush(ids, seen, vid);
       if (ids.length >= 12) break;
@@ -132,7 +157,7 @@ async function handleOverview(url, env) {
   const overviewMedia = ids.slice(0, 12).map((id, idx) => {
     const pinned = must.includes(id);
     return {
-      label: pinned ? ("Pinned Video " + (idx + 1)) : ("Video " + (idx + 1)),
+      label: (titlesById[id] ? String(titlesById[id]) : (pinned ? ("Pinned Video " + (idx + 1)) : ("Video " + (idx + 1)))),
       href: "https://youtu.be/" + id,
       src: "https://img.youtube.com/vi/" + id + "/hqdefault.jpg",
       priority: pinned ? 1000 : (100 - idx),
