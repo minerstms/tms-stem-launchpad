@@ -256,8 +256,8 @@ a{color:inherit;text-decoration:none}
 .pageTitle{font-size:34px;font-weight:900;letter-spacing:.2px}
 .pageSub{color:var(--muted);font-size:15px;font-weight:700}
 .backLink{display:inline-block;margin:10px 0 14px;font-weight:900;color:rgba(255,255,255,.9)}
-.toolsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
-.toolCard{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.05);padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .10s ease, box-shadow .2s ease}
+.toolsGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.toolCard{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.05);padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .10s ease, box-shadow .2s ease;min-width:0}
 .toolCard:hover{transform:translateY(-1px);box-shadow:0 14px 30px rgba(0,0,0,.22)}
 .toolHead{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
 .toolLeft{display:flex;align-items:center;gap:10px;min-width:0}
@@ -272,11 +272,11 @@ a{color:inherit;text-decoration:none}
   box-shadow:0 10px 24px rgba(0,0,0,.25);
 }
 
-.toolTitle{font-weight:900;line-height:1.15}
+.toolTitle{font-weight:900;line-height:1.15;min-width:0}
 .toolBadge{font-size:11px;padding:5px 8px;border-radius:999px;border:1px solid rgba(255,255,255,.14);color:rgba(255,255,255,.88);background:rgba(0,0,0,.18);white-space:nowrap}
 .toolBody{margin-top:10px;display:grid;gap:10px}
 .toolDesc{color:rgba(255,255,255,.85);font-size:13px;line-height:1.35}
-.toolTags{display:flex;flex-wrap:wrap;gap:6px}
+.toolTags{display:flex;flex-wrap:wrap;gap:6px;min-width:0}
 .tag{font-size:11px;padding:4px 7px;border-radius:999px;border:1px solid rgba(255,255,255,.10);color:rgba(255,255,255,.75);background:rgba(0,0,0,.15)}
 .toolActions{display:flex;align-items:center;justify-content:space-between;gap:10px}
 .openBtn{border:none;border-radius:14px;padding:10px 12px;font-weight:900;background:rgba(79,134,198,.85);color:white;cursor:pointer}
