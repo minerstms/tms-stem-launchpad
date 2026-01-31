@@ -162,6 +162,57 @@ function assetUrl(path){
     }
   }
 
+  // ============================================================
+  // Ask Geppetto button (v1)
+  // Rule: DO NOT move any existing headings/text. Only ADD the button.
+  // Placement: appended inside .gimkitScroller, after the requirement text.
+  // Typography: reuses .gimkitTitle so it matches "Gimkit!" exactly.
+  // ============================================================
+  function ensureAskGeppettoBtn(){
+    // Add exactly ONE Ask Geppetto! button per Gimkit card.
+    // Rule: do NOT move any existing headings/text. Only ADD the button.
+    var scrollers = document.querySelectorAll(".gimkitScroller");
+    if (!scrollers || !scrollers.length) return;
+
+    for (var i=0;i<scrollers.length;i++){
+      var sc = scrollers[i];
+      var card = sc.closest ? sc.closest(".gimkitCard") : null;
+      card = card || sc.parentNode || sc;
+
+      // Already added for this card? Stop.
+      if (card.querySelector && card.querySelector(".askGeppettoBtn")) continue;
+
+      var btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "askGeppettoBtn askGeppettoImgBtn";
+      btn.setAttribute("aria-label", "Ask Geppetto!");
+
+      // Use a graphic button image (transparent background) so it stands out.
+      var img = document.createElement("img");
+      img.className = "askGeppettoImg";
+      img.src = "assets/ask-geppetto-button.png";
+      img.alt = "Ask Geppetto!";
+      btn.appendChild(img);
+
+      // Append BELOW the Gimkit scroller, but keep the button inside the same
+      // width-constrained inner wrapper so it lines up perfectly with the
+      // "20 Questions..." panel above.
+      var inner = (card.querySelector ? card.querySelector(".gimkitInner") : null) || sc.parentNode || card;
+      inner.appendChild(btn);
+    }
+  }
+
+  // Add on load, and again after dynamic renders (safe + idempotent)., and again after dynamic renders (safe + idempotent).
+  if (document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", ensureAskGeppettoBtn);
+  } else {
+    ensureAskGeppettoBtn();
+  }
+
+  // Also run shortly after scrollers populate.
+  setTimeout(ensureAskGeppettoBtn, 250);
+  setTimeout(ensureAskGeppettoBtn, 1000);
+
   function applyCurated(list){
     // Curated grid uses the same "thumb tiles" container if present, otherwise ignore.
     // (Keeps this upgrade non-breaking across all project pages.)
