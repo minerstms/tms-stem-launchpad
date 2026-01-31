@@ -565,3 +565,23 @@ a{color:inherit;text-decoration:none}
 
 /* Registry cards: keep the existing card style, slightly tighten */
 .registryCard .blurb{ opacity:.95; }
+
+
+/* === SCROLLER SCROLLBAR THUMB SIZE OVERRIDE (ACCESSIBILITY) === */
+/* Make horizontal scrollbar thumbs easier to grab on Overview and Gimkit scrollers */
+.daTop .thumbRow::-webkit-scrollbar,
+.daTop .rail::-webkit-scrollbar,
+.gimkitScroller .gimTrack::-webkit-scrollbar{
+  height: 28px !important; /* ~3× taller than 10px */
+}
+.daTop .thumbRow::-webkit-scrollbar-thumb,
+.daTop .rail::-webkit-scrollbar-thumb,
+.gimkitScroller .gimTrack::-webkit-scrollbar-thumb{
+  border-radius: 999px !important;
+}
+/* Slightly thicker track on Firefox (height can't be set), but keep visible */
+.daTop .thumbRow,
+.daTop .rail,
+.gimkitScroller .gimTrack{
+  scrollbar-width: auto;
+}
