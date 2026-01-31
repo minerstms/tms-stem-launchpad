@@ -212,8 +212,42 @@ function assetUrl(path){
     // so it is visually its own entity (not part of Gimkit).
     var parent = card.parentNode;
     if (parent){
-      parent.insertBefore(askCard, card.nextSibling);
+
+      // Wrap the Gimkit card + Ask card into a single right-column stack so:
+      // - Gimkit card does NOT stretch tall (no empty space inside it)
+      // - Ask Geppetto card sits at the bottom, aligning with the left Overview card
+      if (!(parent.classList && parent.classList.contains('gimkitStack'))) {
+        var stack = document.createElement('div');
+        stack.className = 'gimkitStack';
+
+        var spacer = document.createElement('div');
+        spacer.className = 'gimkitStackSpacer';
+
+        parent.insertBefore(stack, card);
+        stack.appendChild(card);
+        stack.appendChild(spacer);
+        stack.appendChild(askCard);
+      } else {
+        // Already wrapped; ensure Ask card is present (idempotent)
+        if (!parent.querySelector('#askGeppettoCard')) {
+          parent.appendChild(askCard);
+        }
+      }
     }
+
+    // Ensure the left Overview card can "push" its scroller down to match the right stack height.
+    // We do this by inserting a flex spacer above the Overview scroller (idempotent).
+    try {
+      var heroInner = document.querySelector('.heroCard .heroInner');
+      if (heroInner && !heroInner.querySelector('.overviewSpacer')) {
+        var scroller = heroInner.querySelector('.overviewScroller');
+        if (scroller) {
+          var oSpacer = document.createElement('div');
+          oSpacer.className = 'overviewSpacer';
+          heroInner.insertBefore(oSpacer, scroller);
+        }
+      }
+    } catch (e) {}
   }
 
   // Add on load, and again after dynamic renders (safe + idempotent)., and again after dynamic renders (safe + idempotent).
