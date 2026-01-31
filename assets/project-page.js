@@ -259,31 +259,32 @@ function assetUrl(path){
       }catch(e){ /* silent */ }
       
     // ============================================================
-    // Overview scroller (NEW): Cloudflare Worker playlist aggregator
-    // Endpoint: /api/overview?project=<key>
-    // Must never break the page if missing.
-    // ============================================================
-    try{
-      // Always call applyThumbRow() so any baked-in tiles are cleared and
-      // a placeholder is shown when the playlist has no items yet.
-      var wres = await fetch("/api/overview?project=" + encodeURIComponent(key), {cache:"no-store"});
-      if (wres && wres.ok){
-        var wdata = await wres.json();
-        var list = (wdata && Array.isArray(wdata.overviewMedia)) ? wdata.overviewMedia : [];
-        applyThumbRow(list);
-        __overviewLoadedFromApi = true;
-      } else {
-        applyThumbRow([]);
-        __overviewLoadedFromApi = true;
-      }
-    }catch(e){
-      applyThumbRow([]);
-      __overviewLoadedFromApi = true;
-    }
+// Overview scroller (NEW): Cloudflare Worker playlist aggregator
+// Endpoint: /api/overview?project=<key>
+// RULE: Overview must be 100% data-driven.
+// - Always clear baked-in tiles immediately
+// - Always show placeholders if API returns empty or fails
+// ============================================================
+// Clear any legacy DOM tiles and show placeholder right away
+applyThumbRow([]);
+__overviewLoadedFromApi = false;
 
+try{
+  var wres = await fetch("/api/overview?project=" + encodeURIComponent(key), {cache:"no-store"});
+  if (wres && wres.ok){
+    var wdata = await wres.json();
+    // IMPORTANT: call applyThumbRow even if array is empty (keeps placeholder, never legacy tiles)
+    applyThumbRow((wdata && Array.isArray(wdata.overviewMedia)) ? wdata.overviewMedia : []);
+    __overviewLoadedFromApi = true;
+    // NOTE: curated/inspiration remain supported via legacy JSON if you still use them.
+  }
+}catch(e){
+  // Keep placeholder (already rendered)
+}
 
-    // ============================================================
-    // Overview / curated / inspiration (LEGACY: media-links.json)
+// ============================================================
+// Overview / curated / inspiration (LEGACY: media-links.json)
+
     // Must never break the page if missing or malformed.
     // Supports both schemas:
     //  A) { "_GLOBAL": {...}, "project-02": {...} }
@@ -298,7 +299,7 @@ function assetUrl(path){
         // Project-level
         if (proj){
           // IMPORTANT: Do NOT overwrite the API-driven Overview scroller if it already loaded.
-          if (!__overviewLoadedFromApi && proj.overviewMedia) applyThumbRow(proj.overviewMedia);
+          // Overview is API-only (no legacy fallback)
           if (proj.curated) applyCurated(proj.curated);
           if (proj.inspiration) applyInspiration(proj.inspiration);
         }
@@ -306,7 +307,7 @@ function assetUrl(path){
         // Optional global fallbacks
         var glob = cfg && cfg["_GLOBAL"];
         if (glob){
-          if (!__overviewLoadedFromApi && glob.overviewMedia) applyThumbRow(glob.overviewMedia);
+          // Overview is API-only (no legacy fallback)
           if (glob.curated) applyCurated(glob.curated);
           if (glob.inspiration) applyInspiration(glob.inspiration);
         }

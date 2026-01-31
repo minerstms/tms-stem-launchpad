@@ -1,184 +1,154 @@
-// ===================== _worker.js (TOP) =====================
-// Cloudflare Pages (Advanced Mode) Worker
-// Purpose: Provide /api/overview?project=<project-key> endpoint that
-// turns YouTube playlist IDs (from /assets/playlists.json) into
-// Overview scroller media items WITHOUT needing a YouTube API key.
-// Uses YouTube Atom feeds: https://www.youtube.com/feeds/videos.xml?playlist_id=...
+// ============================================================
+// Cloudflare Pages Advanced Mode Worker
+// Provides: /api/overview?project=<key>
+// Source of truth: /assets/playlists.json
+// Fetch strategy: scrape https://www.youtube.com/playlist?list=... for videoIds
+// NOTE: Use env.ASSETS.fetch for all local assets to avoid recursion (Error 1019).
+// ============================================================
 
-const FEED_BASE = "https://www.youtube.com/feeds/videos.xml?playlist_id=";
+export default {
+  async fetch(request, env, ctx) {
+    try {
+      const url = new URL(request.url);
 
-// Lightweight XML extraction for YouTube feeds (good enough for Atom feed).
-function parseFeed(xmlText, limit=16){
-  const items = [];
-  if (!xmlText) return items;
+      // CORS preflight
+      if (request.method === "OPTIONS") {
+        return new Response(null, {
+          status: 204,
+          headers: corsHeaders()
+        });
+      }
 
-  // Split on <entry> blocks
-  const entries = xmlText.split("<entry>").slice(1);
-  for (const blockRaw of entries){
-    if (items.length >= limit) break;
-    const block = "<entry>" + blockRaw;
+      if (url.pathname === "/api/overview") {
+        return await handleOverview(url, env);
+      }
 
-    const idMatch = block.match(/<yt:videoId>([^<]+)<\/yt:videoId>/i);
-    if (!idMatch) continue;
-    const videoId = idMatch[1].trim();
-
-    // Title appears multiple places; pick the <title> inside entry
-    const titleMatch = block.match(/<title>([^<]+)<\/title>/i);
-    let title = titleMatch ? titleMatch[1] : "";
-    title = title.replace(/&amp;/g,"&").replace(/&lt;/g,"<").replace(/&gt;/g,">").trim();
-
-    // Published (optional)
-    const pubMatch = block.match(/<published>([^<]+)<\/published>/i);
-    const published = pubMatch ? pubMatch[1].trim() : null;
-
-    items.push({
-      videoId,
-      title,
-      published
-    });
-  }
-  return items;
-}
-
-function ytThumb(videoId){
-  return `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`;
-}
-
-function ytWatch(videoId){
-  return `https://www.youtube.com/watch?v=${videoId}`;
-}
-
-function cleanLabel(s){
-  s = String(s||"").trim();
-  // Remove leading "1 - " / "Global - " patterns
-  s = s.replace(/^\s*\d{1,2}\s*[-–—:]\s*/,"");
-  s = s.replace(/^\s*global\s*[-–—:]\s*/i,"");
-  s = s.replace(/\s+/g," ").trim();
-  return s;
-}
-
-function jsonResponse(obj, status=200, headers={}){
-  return new Response(JSON.stringify(obj,null,2), {
-    status,
-    headers: {
-      "content-type":"application/json; charset=utf-8",
-      "cache-control":"public, max-age=600",
-      ...headers
+      // Everything else: serve static site
+      return env.ASSETS.fetch(request);
+    } catch (err) {
+      // Last-resort: never break the site
+      return new Response("Worker error", { status: 500 });
     }
-  });
+  }
+};
+
+function corsHeaders() {
+  return {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Methods": "GET,OPTIONS",
+    "Access-Control-Allow-Headers": "Content-Type",
+    "Cache-Control": "no-store"
+  };
 }
 
-async function fetchJson(url){
-  const res = await fetch(url, { cf: { cacheTtl: 600, cacheEverything: true } });
-  if (!res.ok) throw new Error(`Fetch failed ${res.status}`);
+async function readJsonAsset(env, path) {
+  const req = new Request("https://internal" + path);
+  const res = await env.ASSETS.fetch(req, { cf: { cacheTtl: 0, cacheEverything: false } });
+  if (!res.ok) throw new Error("Asset not found: " + path);
   return await res.json();
 }
 
-async function fetchText(url){
-  const res = await fetch(url, { cf: { cacheTtl: 600, cacheEverything: true } });
-  if (!res.ok) throw new Error(`Fetch failed ${res.status}`);
-  return await res.text();
+function uniqPush(arr, set, v) {
+  if (!v) return;
+  if (set.has(v)) return;
+  set.add(v);
+  arr.push(v);
 }
 
-function uniqBy(arr, keyFn){
-  const seen = new Set();
+async function fetchPlaylistVideoIds(listId, limit = 24) {
   const out = [];
-  for (const x of (arr||[])){
-    const k = keyFn(x);
-    if (seen.has(k)) continue;
-    seen.add(k);
-    out.push(x);
+  const seen = new Set();
+  const url = "https://www.youtube.com/playlist?list=" + encodeURIComponent(listId) + "&hl=en";
+
+  const res = await fetch(url, {
+    headers: {
+      "User-Agent": "Mozilla/5.0 (compatible; TMS-STEM-Launchpad/1.0; +https://pages.dev/)",
+      "Accept-Language": "en-US,en;q=0.9"
+    }
+  });
+
+  if (!res.ok) return out;
+
+  const html = await res.text();
+
+  // Scrape video IDs from embedded JSON in the playlist page.
+  // This avoids Atom XML fragility and works reliably on Pages.
+  const re = /"videoId":"([a-zA-Z0-9_-]{11})"/g;
+  let m;
+  while ((m = re.exec(html)) !== null) {
+    const id = m[1];
+    if (!seen.has(id)) {
+      seen.add(id);
+      out.push(id);
+      if (out.length >= limit) break;
+    }
   }
   return out;
 }
 
-function orderMustFirst(list, mustIds){
-  if (!mustIds || !mustIds.length) return list;
-  const mustSet = new Set(mustIds);
-  const must = [];
-  const rest = [];
-  for (const it of list){
-    if (mustSet.has(it.videoId)) must.push(it);
-    else rest.push(it);
+async function handleOverview(url, env) {
+  const project = (url.searchParams.get("project") || "").trim();
+  if (!project) {
+    return json({ ok: false, error: "Missing project" }, 400);
   }
-  // Preserve mustIds order
-  must.sort((a,b)=> mustIds.indexOf(a.videoId) - mustIds.indexOf(b.videoId));
-  return [...must, ...rest];
+
+  let cfg;
+  try {
+    cfg = await readJsonAsset(env, "/assets/playlists.json");
+  } catch (e) {
+    return json({ ok: false, project, error: "Missing playlists.json" }, 200);
+  }
+
+  const projCfg = (cfg.projects && cfg.projects[project]) ? cfg.projects[project] : null;
+  const playlistIds = projCfg && Array.isArray(projCfg.playlistIds) ? projCfg.playlistIds.slice() : [];
+
+  // Always include globals playlist first (if provided)
+  const globals = cfg.globalsPlaylistId ? [cfg.globalsPlaylistId] : [];
+
+  // Always pin mustVideos to the very front
+  const must = (cfg.mustVideos && Array.isArray(cfg.mustVideos[project])) ? cfg.mustVideos[project] : [];
+
+  const ids = [];
+  const seen = new Set();
+
+  // 1) Must videos first
+  for (const v of must) uniqPush(ids, seen, String(v));
+
+  // 2) Globals playlist, then project playlists
+  const playlistOrder = globals.concat(playlistIds);
+
+  // Pull in playlist videos until we have enough
+  for (const listId of playlistOrder) {
+    if (!listId) continue;
+    const vids = await fetchPlaylistVideoIds(listId, 30);
+    for (const vid of vids) {
+      uniqPush(ids, seen, vid);
+      if (ids.length >= 12) break;
+    }
+    if (ids.length >= 12) break;
+  }
+
+  // Build overviewMedia
+  const overviewMedia = ids.slice(0, 12).map((id, idx) => {
+    const pinned = must.includes(id);
+    return {
+      label: pinned ? ("Pinned Video " + (idx + 1)) : ("Video " + (idx + 1)),
+      href: "https://youtu.be/" + id,
+      src: "https://img.youtube.com/vi/" + id + "/hqdefault.jpg",
+      priority: pinned ? 1000 : (100 - idx),
+      pinned: !!pinned
+    };
+  });
+
+  return json({ ok: true, project, overviewMedia }, 200);
 }
 
-export default {
-  async fetch(request, env, ctx){
-    try{
-      const url = new URL(request.url);
-      const path = url.pathname || "/";
-
-      // Only handle our API route; let everything else pass through.
-      if (!path.startsWith("/api/overview")){
-        return env.ASSETS.fetch(request);
-      }
-
-      const project = (url.searchParams.get("project") || "").trim();
-      if (!project){
-        return jsonResponse({ ok:false, error:"Missing project" }, 400);
-      }
-
-      // Load playlists config from Pages static assets WITHOUT recursion.
-      const cfgUrl = new URL("/assets/playlists.json", request.url);
-      const cfgResp = await env.ASSETS.fetch(new Request(cfgUrl.toString(), { method:"GET" }));
-      if (!cfgResp || !cfgResp.ok) {
-        return jsonResponse({ ok:false, error:"Failed to load /assets/playlists.json", status: cfgResp && cfgResp.status }, 500);
-      }
-      const cfg = await cfgResp.json();
-
-      const projects = (cfg && cfg.projects) || {};
-      const globalsPlaylistId = cfg && cfg.globalsPlaylistId;
-      const mustVideos = (cfg && cfg.mustVideos && cfg.mustVideos[project]) ? cfg.mustVideos[project] : [];
-
-      const projCfg = projects[project] || {};
-      const playlistId = projCfg.playlistId || projCfg.playlist || projCfg.id;
-
-      // Collect feeds: project playlist first, then globals (optional)
-      const feeds = [];
-      if (playlistId) feeds.push({ kind:"project", playlistId });
-      if (globalsPlaylistId) feeds.push({ kind:"global", playlistId: globalsPlaylistId });
-
-      if (!feeds.length){
-        return jsonResponse({ ok:true, project, overviewMedia: [] });
-      }
-
-      // Pull recent items from each feed
-      let combined = [];
-      for (const f of feeds){
-        try{
-          const xml = await fetchText(FEED_BASE + encodeURIComponent(f.playlistId));
-          const items = parseFeed(xml, 20);
-          // Tag source kind (optional)
-          items.forEach(it => it.kind = f.kind);
-          combined = combined.concat(items);
-        }catch(e){
-          // ignore single feed failure
-        }
-      }
-
-      // De-dup by videoId, keep first appearance (project feed precedence)
-      combined = uniqBy(combined, it => it.videoId);
-
-      // Must videos pinned first (if present)
-      combined = orderMustFirst(combined, mustVideos);
-
-      // Map to overviewMedia schema expected by project-page.js
-      const overviewMedia = combined.slice(0, 16).map((it, idx) => ({
-        label: cleanLabel(it.title || "Video"),
-        href: ytWatch(it.videoId),
-        src: ytThumb(it.videoId),
-        priority: (idx+1)
-      }));
-
-      return jsonResponse({ ok:true, project, overviewMedia });
-
-    }catch(err){
-      return jsonResponse({ ok:false, error:String(err && err.message ? err.message : err) }, 500);
+function json(obj, status = 200) {
+  return new Response(JSON.stringify(obj, null, 2), {
+    status,
+    headers: {
+      "Content-Type": "application/json; charset=utf-8",
+      ...corsHeaders()
     }
-  }
-};
-// ===================== _worker.js (BOTTOM) =====================
+  });
+}
