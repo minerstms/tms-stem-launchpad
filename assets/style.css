@@ -1,5 +1,6 @@
 /* ===================== assets/style.css (TOP) ===================== */
 :root{
+  --marqueeH:44px;
   --navy:#000080;
   --columbia:#4F86C6;
   --white:#ffffff;
@@ -17,7 +18,7 @@ html,body{height:100%}
 /* --- Corner mascot (upper-right) --- */
 .mascotCorner{
   position:fixed;
-  top:12px;
+  top:calc(var(--marqueeH) + 12px);
   right:12px;
   z-index:50;
   width:clamp(52px, 7vw, 96px);
@@ -53,12 +54,9 @@ a{color:inherit;text-decoration:none}
 
 .topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:10px 0 18px;flex-wrap:wrap}
 
-.brand{display:flex;flex-direction:column;gap:6px;align-items:flex-start}
-/* Brand */
-.brand .title{display:none}
-.brandLogo{display:block;height:auto;width:min(560px,78vw);max-width:560px;filter:drop-shadow(0 0 14px rgba(79,134,198,.55));}
- (max-width:520px){.brandLogo{width:min(420px,86vw);max-width:420px;}}
-.brand .subtitle{font-size:15px;color:var(--muted);font-weight:700}
+.brand{display:flex;flex-direction:column;gap:4px}
+.brand .title{font-size:44px;font-weight:800;letter-spacing:.3px}
+.brand .subtitle{font-size:13px;color:var(--muted)}
 
 .searchRow{display:flex;gap:10px;align-items:center;flex-wrap:wrap}
 .searchRow input{
@@ -176,8 +174,8 @@ a{color:inherit;text-decoration:none}
 
 /* Section titles */
 .sectionTitle{display:flex;align-items:baseline;justify-content:space-between;gap:12px;margin:22px 0 10px}
-.sectionTitle h2{margin:0;font-size:20px;letter-spacing:.2px}
-.sectionTitle span{color:var(--muted);font-size:14px}
+.sectionTitle h2{margin:0;font-size:16px;letter-spacing:.2px}
+.sectionTitle span{color:var(--muted);font-size:12px}
 
 /* Pills */
 .pills{display:flex;gap:8px;flex-wrap:wrap}
@@ -215,9 +213,16 @@ a{color:inherit;text-decoration:none}
   padding:14px 14px 12px;
   box-shadow:0 10px 24px rgba(0,0,0,.18);
   transition:transform .10s ease, box-shadow .2s ease, border-color .2s ease;
+  text-decoration:none;
+  -webkit-tap-highlight-color: transparent;
 }
+
 .card:hover{transform:translateY(-2px);border-color:rgba(79,134,198,.45)}
-.kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:22px}
+.card:focus{outline:none;}
+.card:focus-visible{outline:none;border-color:rgba(79,134,198,.75);box-shadow:0 0 0 4px rgba(79,134,198,.55), 0 10px 24px rgba(0,0,0,.18);}
+@media (hover:none){.card:hover{transform:none;}}
+
+.kicker{display:flex;align-items:center;justify-content:space-between;gap:10px;color:var(--muted);font-size:18px}
 .kicker span:first-child{
   font-weight:750;
   color:#ffffff;
@@ -233,7 +238,7 @@ a{color:inherit;text-decoration:none}
 .card h3{margin:10px 0 6px;font-size:18px}
 .card p{margin:0 0 12px;color:var(--navy);font-weight:700;line-height:1.35;font-size:13px}
 .go{display:flex;align-items:center;justify-content:space-between;gap:8px;border-top:1px solid rgba(255,255,255,.10);padding-top:10px;font-size:13px}
-.footer{margin-top:30px;color:rgba(255,255,255,.55);font-size:14px;text-align:center}
+.footer{margin-top:30px;color:rgba(255,255,255,.55);font-size:12px;text-align:center}
 
 /* ---- Images inside cards ---- */
 .imgWrap{
@@ -254,7 +259,7 @@ a{color:inherit;text-decoration:none}
 .pageTop{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;flex-wrap:wrap;padding:10px 0 14px}
 .pageHeroIcon{width:clamp(72px, 10vw, 120px);height:clamp(72px, 10vw, 120px);border-radius:22px;object-fit:contain;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.16);padding:10px;flex:0 0 auto;box-shadow:0 12px 30px rgba(0,0,0,.25)}
 .pageTitle{font-size:34px;font-weight:900;letter-spacing:.2px}
-.pageSub{color:var(--muted);font-size:15px;font-weight:700}
+.pageSub{color:var(--muted);font-size:13px;font-weight:700}
 .backLink{display:inline-block;margin:10px 0 14px;font-weight:900;color:rgba(255,255,255,.9)}
 .toolsGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
 .toolCard{border:1px solid rgba(255,255,255,.14);border-radius:18px;background:rgba(255,255,255,.05);padding:14px;box-shadow:0 10px 24px rgba(0,0,0,.18);transition:transform .10s ease, box-shadow .2s ease}
@@ -588,3 +593,8 @@ a{color:inherit;text-decoration:none}
 .gimkitScroller .gimTrack{
   scrollbar-width: auto;
 }
+
+
+/* --- Gimkit requirement note (two lines, centered) --- */
+.gimkitReq{margin-top:12px;text-align:center;font-weight:800;color:rgba(255,255,255,.78);font-size:13px;line-height:1.25;}
+.gimkitReq span{display:block;}
