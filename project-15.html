@@ -644,8 +644,8 @@
       el.scrollBy({ left: dir * amt, behavior: "smooth" });
     }
 
-    // ===================== OVERVIEW (text + thumbs) =====================
-    (function renderOverview(){
+        // ===================== OVERVIEW (text + thumbs) =====================
+    (async function renderOverview(){
       // overview text
       var lead = document.getElementById("overviewLead");
       if(lead && PAGE_DATA && PAGE_DATA.overview){ lead.textContent = PAGE_DATA.overview; }
@@ -653,67 +653,90 @@
       // thumbs scroller
       var row = document.getElementById("thumbRow");
       if(!row) return;
-      var items = (PAGE_DATA && (PAGE_DATA.inspiration || PAGE_DATA.overviewMedia)) || [];
-      if(!Array.isArray(items)) items = [];
 
-      if(!items.length){
-        // keep the scroller visible even when we don't have curated media yet
+      // Show loading placeholder
+      function showPlaceholders(message = "Loading videos from playlists..."){
         row.innerHTML = '';
         for(var k=0;k<3;k++){
           var ph = document.createElement('div');
           ph.className = 'thumbCard';
           ph.innerHTML = `
             <div style="height:100%;display:flex;flex-direction:column;justify-content:flex-end;padding:12px;background:linear-gradient(180deg, rgba(79,134,198,.15), rgba(0,0,0,.70));">
-              <div style="font-weight:1000">Teacher picks coming soon</div>
-              <div style="margin-top:4px;font-size:12px;font-weight:800;color:rgba(255,255,255,.78)">Add examples for this project</div>
+              <div style="font-weight:1000">${k === 1 ? message : (k === 0 ? 'YouTube Playlists' : 'Coming Soon')}</div>
+              <div style="margin-top:4px;font-size:12px;font-weight:800;color:rgba(255,255,255,.78)">${k === 1 ? 'Please wait...' : 'Videos will appear here'}</div>
             </div>
           `;
           row.appendChild(ph);
         }
-        return;
       }
-      items.forEach(function(it){
-        if(!it) return;
 
-        // Auto-thumb for YouTube links (watch?v=... or youtu.be/...)
-        if(!it.thumb && it.href){
-          var href = String(it.href);
-          var vid = null;
-          var m;
-          m = href.match(/[?&]v=([a-zA-Z0-9_-]{6,})/);
-          if(m) vid = m[1];
-          if(!vid){
-            m = href.match(/youtu\.be\/([a-zA-Z0-9_-]{6,})/);
-            if(m) vid = m[1];
-          }
-          if(vid){
-            it.thumb = "https://i.ytimg.com/vi/" + vid + "/hqdefault.jpg";
-            if(!it.type) it.type = "Video";
-          }
+      showPlaceholders("Loading videos from playlists...");
+
+      // Fetch from API
+      try {
+        const projectSlug = document.documentElement.getAttribute("data-project") || "";
+        const apiUrl = `/api/overview?project=${encodeURIComponent(projectSlug)}`;
+        
+        const response = await fetch(apiUrl);
+        if (!response.ok) {
+          console.warn("API returned", response.status);
+          showPlaceholders("Playlist videos coming soon");
+          return;
         }
 
-        // For YouTube SEARCH links (or any item without thumb), use a clean branded fallback image
-        if(!it.thumb){
-          it.thumb = "assets/youtube-thumb.svg";
-          if(!it.type) it.type = "YouTube";
+        const data = await response.json();
+        if (!data.ok) {
+          console.warn("API error:", data.error);
+          showPlaceholders("Playlist videos coming soon");
+          return;
         }
-        var card = document.createElement("div");
-        card.className = "thumbCard";
-        var type = (it.type || "Link").toUpperCase();
-        var dur  = it.duration || it.meta || "";
-        card.innerHTML = `
-          <img src="${it.thumb}" alt="">
-          <div class="thumbOverlay">
-            <div class="thumbTitle">${it.title || ""}</div>
-            <div class="thumbMeta">
-              <span class="badge">${type}</span>
-              ${dur ? `<span class="badge">${dur}</span>` : ``}
+
+        const items = data.overviewMedia || [];
+        
+        if (!items.length) {
+          showPlaceholders("No videos in playlist yet");
+          return;
+        }
+
+        // Clear placeholders and render videos
+        row.innerHTML = '';
+        
+        items.forEach(function(it){
+          if(!it) return;
+          
+          var card = document.createElement("div");
+          card.className = "thumbCard";
+          
+          // Map API response format to display format
+          const title = it.label || it.title || "Video";
+          const href = it.href || "";
+          const thumb = it.src || it.thumb || "";
+          const type = "VIDEO";
+          const dur = it.meta || it.duration || "";
+          
+          card.innerHTML = `
+            <img src="${thumb}" alt="${title}" loading="lazy">
+            <div class="thumbOverlay">
+              <div class="thumbTitle">${title}</div>
+              <div class="thumbMeta">
+                <span class="badge">${type}</span>
+                ${dur ? `<span class="badge">${dur}</span>` : ``}
+              </div>
             </div>
-          </div>
-        `;
-        if(it.href) card.addEventListener("click", function(){ openLink(it.href); });
-        row.appendChild(card);
-      });
+          `;
+          
+          if(href){
+            card.style.cursor = "pointer";
+            card.addEventListener("click", function(){ openLink(href); });
+          }
+          
+          row.appendChild(card);
+        });
+
+      } catch(err) {
+        console.error("Failed to load overview videos:", err);
+        showPlaceholders("Unable to load videos");
+      }
     })();
 
     // ===================== DAY TABS (objective + QOD + stems) =====================
