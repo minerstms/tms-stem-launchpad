@@ -229,17 +229,16 @@ function assetUrl(path){
         stack.appendChild(askCard);
       } else {
         // Already wrapped; ensure Ask card is present (idempotent)
-        if (!parent.querySelector('#askGeppettoCard')) {
+        if (!parent.querySelector('.askGeppettoCard')) {
           parent.appendChild(askCard);
         }
       }
     }
 
-    // Ensure the left Overview card can "push" its scroller down to match the right stack height.
-    // We do this by inserting a flex spacer above the Overview scroller (idempotent).
-    try {
-      // Overview scroller positioning handled via CSS (flex + margin-top:auto)
-catch (e) {}
+    // NOTE: Bottom alignment between the left Overview card and the right stack
+    // is handled purely via CSS (flex + spacer + min-height). We previously had
+    // a malformed try/catch here that caused a syntax error and broke scrollers
+    // on some pages. Intentionally left empty.
   }
 
   // Add on load, and again after dynamic renders (safe + idempotent)., and again after dynamic renders (safe + idempotent).
