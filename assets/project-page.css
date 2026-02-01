@@ -16,6 +16,7 @@
    Scope: Only the Overview scroller (#thumbRow).
 ============================================================ */
 #thumbRow{
+  min-height: calc(var(--overview-thumb-height) + 24px);
   display:flex;
   gap:12px;
   overflow-x:auto;
@@ -29,9 +30,10 @@
 #thumbRow .ovTile{
   position:relative;
   flex:0 0 auto;
-  height:220px;
-  width:min(392px, 82vw); /* ~16:9 at 220px tall */
-  border-radius:18px;
+  height:var(--overview-thumb-height);
+  width:min(calc(var(--overview-thumb-height) * 16 / 9), 82vw);
+  max-width: 420px; /* cap desktop width */
+  border-radius:var(--overview-thumb-radius);
   overflow:hidden;
   border:1px solid rgba(255,255,255,.16);
   background:rgba(255,255,255,.06);
@@ -44,6 +46,7 @@
   transform:translateY(-1px);
 }
 #thumbRow .ovTile img{
+  border-radius: inherit;
   width:100%;
   height:100%;
   object-fit:cover;
@@ -324,4 +327,35 @@
 /* Ask card should stay "natural" height (NOT stretched) */
 .gimkitStack .askGeppettoCard{
   flex:0 0 auto;
+}
+
+
+
+/* ===================== Overview scroller (CLAMP FIX) ===================== */
+
+:root{
+  /* Desktop-friendly, responsive, safe */
+  --overview-thumb-height: clamp(140px, 22vh, 240px);
+  --overview-thumb-radius: 18px;
+}
+
+/* The horizontal scroller row */
+.overviewCard .thumbRow{
+  min-height: calc(var(--overview-thumb-height) + 16px);
+  padding-bottom: 6px;
+}
+
+/* Individual overview tiles */
+.overviewCard .thumbTile{
+  height: var(--overview-thumb-height);
+  border-radius: var(--overview-thumb-radius);
+  overflow: hidden;
+}
+
+/* Thumbnail images */
+.overviewCard .thumbTile img{
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: var(--overview-thumb-radius);
 }
