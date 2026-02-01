@@ -16,7 +16,7 @@
    Scope: Only the Overview scroller (#thumbRow).
 ============================================================ */
 #thumbRow{
-  min-height: calc(var(--overview-thumb-height) + 24px);
+  min-height: calc(var(--overview-thumb-height) + 24px) !important;
   display:flex;
   gap:12px;
   overflow-x:auto;
@@ -30,7 +30,7 @@
 #thumbRow .ovTile{
   position:relative;
   flex:0 0 auto;
-  height:var(--overview-thumb-height);
+  height:var(--overview-thumb-height) !important;
   width:min(calc(var(--overview-thumb-height) * 16 / 9), 82vw);
   max-width: 420px; /* cap desktop width */
   border-radius:var(--overview-thumb-radius);
@@ -335,8 +335,8 @@
 
 :root{
   /* Desktop-friendly, responsive, safe */
-  --overview-thumb-height: clamp(140px, 22vh, 240px);
-  --overview-thumb-radius: 18px;
+  --overview-thumb-height: clamp(120px, 18vh, 180px);
+  --overview-thumb-radius: 16px;
 }
 
 /* The horizontal scroller row */
