@@ -153,3 +153,27 @@
 /* Tighten spacing below Gimkit to reduce the "dead zone" */
 .gimkitStack .gimkitCard{ margin-bottom:10px; }
 
+
+
+
+/* ===================== Video Library wrapper (Overview scroller) ===================== */
+.videoLibBox{
+  margin-top:14px;
+  padding:14px;
+  border-radius:20px;
+  background:rgba(0,0,0,.22);
+  border:1px solid rgba(255,255,255,.10);
+}
+.videoLibBox .h2{
+  margin:0;
+}
+.videoLibLead{
+  margin:10px 0 0;
+  color:rgba(255,255,255,.88);
+  font-size:22px;
+  line-height:1.55;
+  font-weight:700;
+}
+.videoLibBox #thumbRow{
+  margin-top:14px; /* keep same spacing as before */
+}

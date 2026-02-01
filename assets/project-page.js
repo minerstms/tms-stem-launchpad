@@ -143,6 +143,28 @@ function assetUrl(path){
     var row = document.getElementById("thumbRow");
     if (!row) return;
 
+    // Wrap Overview scroller in a "Video Library" section (idempotent, does NOT move the scroller in layout)
+    try{
+      if (!row.closest('.videoLibBox')){
+        var wrap = document.createElement('div');
+        wrap.className = 'videoLibBox';
+
+        var t = document.createElement('div');
+        t.className = 'h2';
+        t.textContent = 'Video Library';
+
+        var d = document.createElement('p');
+        d.className = 'videoLibLead';
+        d.textContent = 'Watch a video to learn how your tools work.';
+
+        // Insert wrapper exactly where the scroller already lives, then move the scroller into it
+        row.parentNode.insertBefore(wrap, row);
+        wrap.appendChild(t);
+        wrap.appendChild(d);
+        wrap.appendChild(row);
+      }
+    }catch(e){}
+
     // Always clear baked-in tiles so scroller is 100% data-driven
     row.innerHTML = "";
 
