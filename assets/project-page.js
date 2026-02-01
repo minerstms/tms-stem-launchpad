@@ -220,24 +220,34 @@ function assetUrl(path){
         var stack = document.createElement('div');
         stack.className = 'gimkitStack';
 
-        // No spacer: make the Ask card flex to fill any remaining height in the right column
+        var spacer = document.createElement('div');
+        spacer.className = 'gimkitStackSpacer';
+
         parent.insertBefore(stack, card);
         stack.appendChild(card);
+        stack.appendChild(spacer);
         stack.appendChild(askCard);
-
-        // Make sure the Ask card is allowed to grow so we don't leave a dead empty band
       } else {
         // Already wrapped; ensure Ask card is present (idempotent)
-        if (!parent.querySelector('.askGeppettoCard')) {
+        if (!parent.querySelector('#askGeppettoCard')) {
           parent.appendChild(askCard);
         }
       }
     }
 
-    // NOTE: Bottom alignment between the left Overview card and the right stack
-    // is handled purely via CSS (flex + spacer + min-height). We previously had
-    // a malformed try/catch here that caused a syntax error and broke scrollers
-    // on some pages. Intentionally left empty.
+    // Ensure the left Overview card can "push" its scroller down to match the right stack height.
+    // We do this by inserting a flex spacer above the Overview scroller (idempotent).
+    try {
+      var heroInner = document.querySelector('.heroCard .heroInner');
+      if (heroInner && !heroInner.querySelector('.overviewSpacer')) {
+        var scroller = heroInner.querySelector('.overviewScroller');
+        if (scroller) {
+          var oSpacer = document.createElement('div');
+          oSpacer.className = 'overviewSpacer';
+          heroInner.insertBefore(oSpacer, scroller);
+        }
+      }
+    } catch (e) {}
   }
 
   // Add on load, and again after dynamic renders (safe + idempotent)., and again after dynamic renders (safe + idempotent).
@@ -250,67 +260,6 @@ function assetUrl(path){
   // Also run shortly after scrollers populate.
   setTimeout(ensureAskGeppettoBtn, 250);
   setTimeout(ensureAskGeppettoBtn, 1000);
-
-
-  // ============================================================
-  // Top row height sync (v1)
-  // Purpose: Ensure the left hero card stretches to the right stack height
-  // even after late-loading images/fonts (Cloudflare reflow).
-  // Safe: sets MIN height only; never forces shrinking.
-  // ============================================================
-  function syncTopRowHeights(){
-    try{
-      var grid = document.querySelector(".heroGrid");
-      if (!grid) return;
-      var left = grid.querySelector(".heroCard");
-      // Right column may be a wrapped stack (preferred) or a plain gimkitCard.
-      var right = grid.querySelector(".gimkitStack") || grid.querySelector(".gimkitCard");
-      if (!left || !right) return;
-
-      // Measure right stack; set left min-height to match.
-      var rh = Math.ceil(right.getBoundingClientRect().height || 0);
-      if (rh > 0){
-        left.style.minHeight = rh + "px";
-      }
-    }catch(e){}
-  }
-
-  function bindTopRowObservers(){
-    // Run once now
-    syncTopRowHeights();
-
-    // Run after full load (images/fonts)
-    window.addEventListener("load", function(){
-      syncTopRowHeights();
-      setTimeout(syncTopRowHeights, 250);
-    });
-
-    // Re-run on resize
-    window.addEventListener("resize", function(){
-      syncTopRowHeights();
-    });
-
-    // Observe right stack size changes if supported
-    try{
-      if (window.ResizeObserver){
-        var grid = document.querySelector(".heroGrid");
-        if (!grid) return;
-        var right = grid.querySelector(".gimkitStack") || grid.querySelector(".gimkitCard");
-        if (!right) return;
-        var ro = new ResizeObserver(function(){ syncTopRowHeights(); });
-        ro.observe(right);
-      }
-    }catch(e){}
-  }
-
-  // Kick observers after initial DOM build, then again after scrollers populate.
-  if (document.readyState === "loading"){
-    document.addEventListener("DOMContentLoaded", bindTopRowObservers);
-  } else {
-    bindTopRowObservers();
-  }
-  setTimeout(syncTopRowHeights, 250);
-  setTimeout(syncTopRowHeights, 1000);
 
   function applyCurated(list){
     // Curated grid uses the same "thumb tiles" container if present, otherwise ignore.

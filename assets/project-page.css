@@ -16,7 +16,6 @@
    Scope: Only the Overview scroller (#thumbRow).
 ============================================================ */
 #thumbRow{
-  min-height: calc(var(--overview-thumb-height) + 24px) !important;
   display:flex;
   gap:12px;
   overflow-x:auto;
@@ -30,10 +29,9 @@
 #thumbRow .ovTile{
   position:relative;
   flex:0 0 auto;
-  height:var(--overview-thumb-height) !important;
-  width:min(calc(var(--overview-thumb-height) * 16 / 9), 82vw);
-  max-width: 420px; /* cap desktop width */
-  border-radius:var(--overview-thumb-radius);
+  height:220px;
+  width:min(392px, 82vw); /* ~16:9 at 220px tall */
+  border-radius:18px;
   overflow:hidden;
   border:1px solid rgba(255,255,255,.16);
   background:rgba(255,255,255,.06);
@@ -46,7 +44,6 @@
   transform:translateY(-1px);
 }
 #thumbRow .ovTile img{
-  border-radius: inherit;
   width:100%;
   height:100%;
   object-fit:cover;
@@ -156,206 +153,3 @@
 /* Tighten spacing below Gimkit to reduce the "dead zone" */
 .gimkitStack .gimkitCard{ margin-bottom:10px; }
 
-
-/* =========================================================
-   Ask Geppetto + Hero layout (LOCKED STABLE WIDTH + ALIGN)
-   - Ensure Overview is the wider column
-   - Prevent image button from forcing column expansion
-   - Keep bottoms aligned without wasting space under scroller
-   ========================================================= */
-
-.daTop .sectionGrid{
-  display:grid;
-  grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr) !important;
-  gap:14px !important;
-  align-items:stretch;
-
-}
-
-/* Allow grid items to shrink (critical for Cloudflare + big images) */
-.daTop .sectionGrid > *{ min-width:0 !important; }
-
-/* Title: slightly larger/taller so left card can visually balance the right stack */
-.daTop .projectTitle{
-  font-size: clamp(34px, 4.2vw, 54px) !important;
-  line-height: 1.05 !important;
-  margin-bottom: 10px !important;
-}
-
-/* Make the Overview card a flex column and pin the scroller to the bottom */
-.daTop .heroCard .heroInner,
-.daTop .overviewCard .overviewInner{
-  display:flex !important;
-  flex-direction:column !important;
-  height:100% !important;
-  min-height:0 !important;
-}
-
-.daTop .overviewScroller{
-  margin-top:auto !important;   /* pushes scroller down */
-  margin-bottom:0 !important;
-}
-
-/* Stack (Gimkit + Ask Geppetto) */
-.gimkitStack{
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  max-width:100%;
-  min-width:0;
-  gap:14px;
-}
-
-/* Make sure the image button NEVER expands the column */
-.askGeppettoLink{
-  display:block;
-  width:100%;
-  max-width:100%;
-}
-
-.askGeppettoLink img{
-  display:block;
-  width:100%;
-  max-width:100%;
-  height:auto;
-}
-
-/* Slightly reduce extra padding inside the Gimkit card so there isn't a dead zone */
-.gimkitStack .gimkitCard{
-  padding-bottom: 10px !important;
-}
-
-
-.daTop .heroGrid{
-  display:grid;
-  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr) !important;
-  gap:14px !important;
-  align-items:stretch;
-
-}
-
-
-/* ====== Ask Geppetto + Gimkit column sizing/spacing (LOCKED) ====== */
-.gimkitStack{
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-  height:100%;
-  min-width:0;
-}
-.gimkitCard, .askGeppettoCard, .gimkitStack, .overviewCard{
-  min-width:0;
-  max-width:100%;
-}
-
-.askGeppettoCard{
-  flex:1 1 auto; /* fill leftover height so we don't get dead space */
-  display:flex;
-  flex-direction:column;
-}
-
-.askGeppettoInner{
-  height:100%;
-  display:flex;
-  align-items:stretch;
-  justify-content:stretch;
-  padding:10px;
-}
-
-.askGeppettoBtn{
-  width:100%;
-  height:100%;
-  background:transparent;
-  border:0;
-  padding:0;
-  cursor:pointer;
-}
-
-.askGeppettoImg{
-  width:100%;
-  height:100%;
-  object-fit:contain;
-  filter:drop-shadow(0 10px 24px rgba(0,0,0,.55));
-}
-
-
-
-/* =========================================================
-   TOP ROW — Equal-height columns + scroller pins to bottom
-   Goal: Right stack (Gimkit + Ask) defines height; left hero stretches.
-   Safe: container-only sizing; does NOT alter tile sizing/scroll logic.
-   ========================================================= */
-
-.heroGrid{
-  align-items:stretch;
-}
-
-/* Right column wrapper created by JS (Gimkit + Ask) */
-.gimkitStack{
-  display:flex;
-  flex-direction:column;
-  gap:12px;
-  height:100%;
-  min-width:0;
-}
-
-/* Left column: make the whole hero card a flex column */
-.heroCard{
-  height:100%;
-  min-height:0;
-}
-.heroCard .heroInner{
-  display:flex;
-  flex-direction:column;
-  height:100%;
-  min-height:0;
-}
-
-/* Let the Overview card absorb leftover height */
-.heroCard .overviewCard{
-  flex:1 1 auto;
-  display:flex;
-  flex-direction:column;
-  min-height:0;
-}
-
-/* Push the scroller area to the bottom inside the Overview card */
-.heroCard .overviewCard .thumbRow{
-  margin-top:auto;
-}
-
-/* Ask card should stay "natural" height (NOT stretched) */
-.gimkitStack .askGeppettoCard{
-  flex:0 0 auto;
-}
-
-
-
-/* ===================== Overview scroller (CLAMP FIX) ===================== */
-
-:root{
-  /* Desktop-friendly, responsive, safe */
-  --overview-thumb-height: clamp(150px, 24vh, 260px);
-  --overview-thumb-radius: 16px;
-}
-
-/* The horizontal scroller row */
-.overviewCard .thumbRow{
-  min-height: calc(var(--overview-thumb-height) + 16px);
-  padding-bottom: 6px;
-}
-
-/* Individual overview tiles */
-.overviewCard .thumbTile{
-  height: var(--overview-thumb-height);
-  border-radius: var(--overview-thumb-radius);
-  overflow: hidden;
-}
-
-/* Thumbnail images */
-.overviewCard .thumbTile img{
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: var(--overview-thumb-radius);
-}
