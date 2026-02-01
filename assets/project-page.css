@@ -162,8 +162,11 @@
    ========================================================= */
 
 .daTop .sectionGrid{
-  grid-template-columns: minmax(0, 1.35fr) minmax(0, 0.65fr) !important;
-  align-items: stretch !important;
+  display:grid;
+  grid-template-columns:minmax(0,1.35fr) minmax(0,.65fr) !important;
+  gap:14px !important;
+  align-items:stretch;
+
 }
 
 /* Allow grid items to shrink (critical for Cloudflare + big images) */
@@ -217,4 +220,57 @@
 /* Slightly reduce extra padding inside the Gimkit card so there isn't a dead zone */
 .gimkitAskStack .gimkitCard{
   padding-bottom: 10px !important;
+}
+
+
+.daTop .heroGrid{
+  display:grid;
+  grid-template-columns:minmax(0,1.25fr) minmax(0,.75fr) !important;
+  gap:14px !important;
+  align-items:stretch;
+
+}
+
+
+/* ====== Ask Geppetto + Gimkit column sizing/spacing (LOCKED) ====== */
+.gimkitAskStack{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  height:100%;
+  min-width:0;
+}
+.gimkitCard, .askGeppettoCard, .gimkitAskStack, .overviewCard{
+  min-width:0;
+  max-width:100%;
+}
+
+.askGeppettoCard{
+  flex:1 1 auto; /* fill leftover height so we don't get dead space */
+  display:flex;
+  flex-direction:column;
+}
+
+.askGeppettoInner{
+  height:100%;
+  display:flex;
+  align-items:stretch;
+  justify-content:stretch;
+  padding:10px;
+}
+
+.askGeppettoBtn{
+  width:100%;
+  height:100%;
+  background:transparent;
+  border:0;
+  padding:0;
+  cursor:pointer;
+}
+
+.askGeppettoImg{
+  width:100%;
+  height:100%;
+  object-fit:contain;
+  filter:drop-shadow(0 10px 24px rgba(0,0,0,.55));
 }

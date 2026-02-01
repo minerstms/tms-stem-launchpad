@@ -220,17 +220,20 @@ function assetUrl(path){
         var stack = document.createElement('div');
         stack.className = 'gimkitStack';
 
-        var spacer = document.createElement('div');
-        spacer.className = 'gimkitStackSpacer';
-
+        // No spacer: make the Ask card flex to fill any remaining height in the right column
         parent.insertBefore(stack, card);
         stack.appendChild(card);
-        stack.appendChild(spacer);
         stack.appendChild(askCard);
+
+        // Make sure the Ask card is allowed to grow so we don't leave a dead empty band
+        askCard.style.flex = '1 1 auto';
+        card.style.flex = '0 0 auto';
       } else {
         // Already wrapped; ensure Ask card is present (idempotent)
         if (!parent.querySelector('.askGeppettoCard')) {
           parent.appendChild(askCard);
+          askCard.style.flex = '1 1 auto';
+          card.style.flex = '0 0 auto';
         }
       }
     }
