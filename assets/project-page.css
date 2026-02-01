@@ -106,7 +106,7 @@
 /* The JS wraps Gimkit + Ask into a vertical stack. Ensure it can shrink.
    Without min-width:0, the large button image can force the whole right
    column wider after JS runs ("flash" symptom you described). */
-.gimkitAskStack{ 
+.gimkitStack{ 
   display:flex;
   flex-direction:column;
   height:100%;
@@ -151,7 +151,7 @@
 }
 
 /* Tighten spacing below Gimkit to reduce the "dead zone" */
-.gimkitAskStack .gimkitCard{ margin-bottom:10px; }
+.gimkitStack .gimkitCard{ margin-bottom:10px; }
 
 
 /* =========================================================
@@ -194,7 +194,7 @@
 }
 
 /* Stack (Gimkit + Ask Geppetto) */
-.gimkitAskStack{
+.gimkitStack{
   display:flex;
   flex-direction:column;
   width:100%;
@@ -218,7 +218,7 @@
 }
 
 /* Slightly reduce extra padding inside the Gimkit card so there isn't a dead zone */
-.gimkitAskStack .gimkitCard{
+.gimkitStack .gimkitCard{
   padding-bottom: 10px !important;
 }
 
@@ -233,14 +233,14 @@
 
 
 /* ====== Ask Geppetto + Gimkit column sizing/spacing (LOCKED) ====== */
-.gimkitAskStack{
+.gimkitStack{
   display:flex;
   flex-direction:column;
   gap:14px;
   height:100%;
   min-width:0;
 }
-.gimkitCard, .askGeppettoCard, .gimkitAskStack, .overviewCard{
+.gimkitCard, .askGeppettoCard, .gimkitStack, .overviewCard{
   min-width:0;
   max-width:100%;
 }
@@ -273,4 +273,55 @@
   height:100%;
   object-fit:contain;
   filter:drop-shadow(0 10px 24px rgba(0,0,0,.55));
+}
+
+
+
+/* =========================================================
+   TOP ROW — Equal-height columns + scroller pins to bottom
+   Goal: Right stack (Gimkit + Ask) defines height; left hero stretches.
+   Safe: container-only sizing; does NOT alter tile sizing/scroll logic.
+   ========================================================= */
+
+.heroGrid{
+  align-items:stretch;
+}
+
+/* Right column wrapper created by JS (Gimkit + Ask) */
+.gimkitStack{
+  display:flex;
+  flex-direction:column;
+  gap:12px;
+  height:100%;
+  min-width:0;
+}
+
+/* Left column: make the whole hero card a flex column */
+.heroCard{
+  height:100%;
+  min-height:0;
+}
+.heroCard .heroInner{
+  display:flex;
+  flex-direction:column;
+  height:100%;
+  min-height:0;
+}
+
+/* Let the Overview card absorb leftover height */
+.heroCard .overviewCard{
+  flex:1 1 auto;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+
+/* Push the scroller area to the bottom inside the Overview card */
+.heroCard .overviewCard .thumbRow{
+  margin-top:auto;
+}
+
+/* Ask card should stay "natural" height (NOT stretched) */
+.gimkitStack .askGeppettoCard{
+  flex:0 0 auto;
 }
