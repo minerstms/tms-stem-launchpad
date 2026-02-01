@@ -335,7 +335,7 @@
 
 :root{
   /* Desktop-friendly, responsive, safe */
-  --overview-thumb-height: clamp(120px, 18vh, 180px);
+  --overview-thumb-height: clamp(150px, 24vh, 260px);
   --overview-thumb-radius: 16px;
 }
 
