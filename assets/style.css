@@ -686,25 +686,3 @@ a{color:inherit;text-decoration:none}
   max-width: 100%;
 }
 
-/* ===================== Cloudflare layout stability fix (2026-01-31) =====================
-   Symptom: on first paint the widths look correct, but after images load the
-   right column "grows" (CSS Grid min-content sizing) and can push the layout.
-   Fix: allow columns/items to shrink (minmax(0, ...)) and prevent long/large
-   content (like the Ask Geppetto image) from setting a larger min-width.
-*/
-.sectionGrid{
-  grid-template-columns: minmax(0, 1.12fr) minmax(0, 0.88fr) !important;
-}
-.sectionGrid > *,
-.heroCard,
-.gimkitCard,
-.gimkitStack,
-.askGeppettoCard{
-  min-width: 0 !important;
-}
-.askGeppettoImg{
-  max-width: 100% !important;
-  width: 100% !important;
-  height: auto !important;
-}
-
